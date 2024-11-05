@@ -10,5 +10,5 @@ FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web pag
     -   [ ] Custom CSS
     -   [ ] Custom JS
 -   [ ] Some Improvoments to the UI
--   [ ] Add a way to scrape Youtube feeds without reload the page
--   [ ] Test extension on chromium based browsers
+-   [ ] Add a way to scrape Youtube feeds without reload the page for chromium based browsers
+-   [x] Test extension on chromium based browsers

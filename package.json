@@ -1,0 +1,45 @@
+{
+    "name": "firerss",
+    "version": "1.0.0",
+    "description": "A RSS and Atom feeds scraper on the current page",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mt190502/firerss.git"
+    },
+    "keywords": [
+        "rss",
+        "atom",
+        "feed",
+        "scraper",
+        "webextension",
+        "firefox",
+        "chromium"
+    ],
+    "author": "Taha (mt190502)",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/mt190502/firerss/issues"
+    },
+    "homepage": "https://github.com/mt190502/firerss",
+    "devDependencies": {
+        "@eslint/js": "^9.13.0",
+        "@types/chrome": "^0.0.280",
+        "@types/firefox-webext-browser": "^120.0.4",
+        "@types/node": "^22.7.7",
+        "@typescript-eslint/eslint-plugin": "^8.10.0",
+        "@typescript-eslint/parser": "^8.10.0",
+        "eslint": "^9.13.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "prettier": "^3.3.3",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.10.0"
+    },
+    "scripts": {
+        "depInstall": "pnpm install && pnpm update",
+        "eslint": "eslint .",
+        "eslint:fix": "eslint . --fix",
+        "prettier": "prettier --config .prettierrc.json 'src/**/*.ts'",
+        "prettier:fix": "prettier --config .pretterrc.json 'src/**/*.ts' --write"
+    }
+}

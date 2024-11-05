@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./src",
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": ["ES6", "DOM"],
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "outDir": "./dist",
+        "paths": {
+            "*": ["node_modules/*"]
+        },
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "target": "ES6",
+        "typeRoots": ["node_modules/@types"]
+    },
+    "compileOnSave": true,
+    "exclude": ["node_modules/*", "**/*.test.ts", "**/*.spec.ts", "dist", "build", "**/css/*", "**/html/*"],
+    "include": ["./src/**/*"]
+}

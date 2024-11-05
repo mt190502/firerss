@@ -1,0 +1,17 @@
+# Builds
+build/
+dist/
+
+# Node
+node_modules
+
+# Test releases
+*.xcf
+*.pem
+*.xpi
+*.zip
+*.crx
+
+# IDE
+.idea/
+.vscode/

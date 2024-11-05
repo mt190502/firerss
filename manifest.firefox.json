@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
 
-    "name": "FireRSS [Firefox]",
+    "name": "FireRSS - RSS and Atom feeds scraper",
     "short_name": "FireRSS",
     "description": "A RSS and Atom feeds scraper on the current page",
     "version": "1.0.0",

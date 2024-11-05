@@ -9,7 +9,7 @@ chromium:
 	cp manifest.chromium.json $(CHROMIUM_BUILD_DIR)/manifest.json
 	cp src/html/* $(CHROMIUM_BUILD_DIR)/html
 	cp src/css/* $(CHROMIUM_BUILD_DIR)/css
-	cd $(CHROMIUM_BUILD_DIR) && (find . -type f -not -name '*.zip' | zip -@ ../$(shell basename $(CHROMIUM_BUILD_DIR)).zip)
+	cd $(CHROMIUM_BUILD_DIR) && (find . -type f -not -name '*.zip' | zip -@ ../$(shell basename $(CHROMIUM_BUILD_DIR))-firerss.zip)
 
 firefox:
 	npx tsc -p tsconfig.json
@@ -19,7 +19,7 @@ firefox:
 	cp manifest.firefox.json $(FIREFOX_BUILD_DIR)/manifest.json
 	cp src/html/* $(FIREFOX_BUILD_DIR)/html
 	cp src/css/* $(FIREFOX_BUILD_DIR)/css
-	cd $(FIREFOX_BUILD_DIR) && (find . -type f -not -name '*.xpi' -not -name '*.zip' | zip -@ ../$(shell basename $(FIREFOX_BUILD_DIR)).xpi)
+	cd $(FIREFOX_BUILD_DIR) && (find . -type f -not -name '*.xpi' -not -name '*.zip' | zip -@ ../$(shell basename $(FIREFOX_BUILD_DIR))-firerss.xpi)
 
 clean:
 	rm -rf build dist

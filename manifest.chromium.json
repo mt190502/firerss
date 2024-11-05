@@ -6,11 +6,9 @@
     "description": "A RSS and Atom feeds scraper on the current page",
     "version": "1.0.0",
     "homepage_url": "https://github.com/mt190502/firerss",
-    
+
     "icons": {
-        "16": "img/firerss_16.png",
         "32": "img/firerss_32.png",
-        "48": "img/firerss_48.png",
         "64": "img/firerss_64.png",
         "128": "img/firerss_128.png",
         "256": "img/firerss_256.png",
@@ -19,13 +17,11 @@
     "action": {
         "default_popup": "html/popup.html",
         "default_icon": {
-            "16":  "img/firerss_grey_16.png",
-            "32":  "img/firerss_grey_32.png",
-            "48":  "img/firerss_grey_48.png",
-            "64":  "img/firerss_grey_64.png",
-            "128": "img/firerss_grey_128.png",
-            "256": "img/firerss_grey_256.png",
-            "512": "img/firerss_grey_512.png"
+            "32": "img/firerss_32_gray.png",
+            "64": "img/firerss_64_gray.png",
+            "128": "img/firerss_128_gray.png",
+            "256": "img/firerss_256_gray.png",
+            "512": "img/firerss_512_gray.png"
         }
     },
 
@@ -33,18 +29,18 @@
         "service_worker": "js/background.js"
     },
 
-    "options_ui": {
-        "page": "html/options.html",
-        "open_in_tab": false
-    },
-
-    "permissions": [
-        "activeTab",
-        "scripting"
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": ["js/content.js"]
+        }
     ],
 
-    "host_permissions": [
-        "https://*/*",
-        "http://*/*"
-    ]
+    "externally_connectable": {
+        "matches": ["*://*.google.com/*"]
+    },
+
+    "permissions": ["activeTab", "scripting"],
+
+    "host_permissions": ["https://*/*", "http://*/*"]
 }

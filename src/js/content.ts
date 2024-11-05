@@ -21,3 +21,23 @@ const findAllFeeds = async (): Promise<string[]> => {
     }
     return feed_urls;
 };
+
+if (typeof browser === 'undefined' && chrome) {
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        (async () => {
+            const feed_urls = await findAllFeeds();
+            switch (message.action) {
+                case 'iWantToKnowFeeds':
+                    sendResponse({ feeds: feed_urls });
+                    break;
+                case 'ping':
+                    sendResponse({ status: 'pong' });
+                    break;
+                default:
+                    sendResponse({ status: 'Unknown Action' });
+                    break;
+            }
+        })();
+        return true;
+    });
+}

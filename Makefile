@@ -7,11 +7,12 @@ chromium:
 	cp -r dist/* $(CHROMIUM_BUILD_DIR)/js
 	cp -r assets/* $(CHROMIUM_BUILD_DIR)/img
 	cp manifest.chromium.json $(CHROMIUM_BUILD_DIR)/manifest.json
-	cp src/html/* $(CHROMIUM_BUILD_DIR)
+	cp src/html/* $(CHROMIUM_BUILD_DIR)/html
 	cp src/css/* $(CHROMIUM_BUILD_DIR)/css
+	cd $(CHROMIUM_BUILD_DIR) && (find . -type f -not -name '*.zip' | zip -@ ../$(shell basename $(CHROMIUM_BUILD_DIR)).zip)
 
 firefox:
-	# npx tsc -p tsconfig.json
+	npx tsc -p tsconfig.json
 	mkdir -p $(FIREFOX_BUILD_DIR)/{html,css,js,img}
 	cp -r dist/* $(FIREFOX_BUILD_DIR)/js
 	cp -r assets/* $(FIREFOX_BUILD_DIR)/img

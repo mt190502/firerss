@@ -17,8 +17,8 @@
     "action": {
         "default_popup": "html/popup.html",
         "default_icon": {
-            "32":  "img/firerss_32_gray.png",
-            "64":  "img/firerss_64_gray.png",
+            "32": "img/firerss_32_gray.png",
+            "64": "img/firerss_64_gray.png",
             "128": "img/firerss_128_gray.png",
             "256": "img/firerss_256_gray.png",
             "512": "img/firerss_512_gray.png"
@@ -29,15 +29,9 @@
         "scripts": ["js/background.js", "js/content.js"]
     },
 
-    "permissions": [
-        "tabs",
-        "scripting"
-    ],
+    "permissions": ["tabs", "scripting"],
 
-    "host_permissions": [
-        "https://*/*",
-        "http://*/*"
-    ],
+    "host_permissions": ["https://*/*", "http://*/*"],
 
     "browser_specific_settings": {
         "gecko": {
@@ -58,7 +52,5 @@
         "extension_pages": "script-src 'self'; object-src 'self';"
     },
 
-    "web_accessible_resources": [
-        { "resources": ["img/*"], "matches": ["<all_urls>"] }
-    ]
+    "web_accessible_resources": [{ "resources": ["img/*"], "matches": ["<all_urls>"] }]
 }

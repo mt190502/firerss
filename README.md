@@ -39,6 +39,10 @@ FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web pag
 
 7. Click on `Add Extension` to install the extension.
 
+## Installation (Firefox)
+
+This extension is already available on the Firefox Add-ons store. You can install it from [here](https://addons.mozilla.org/en-US/firefox/addon/firerss-feed-scraper/)
+
 ## TODO
 
 - [ ] Options page

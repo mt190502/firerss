@@ -3,11 +3,14 @@ const findAllFeeds = async (): Promise<string[]> => {
     let feeds_on_page = document.querySelectorAll(
         'link[type="application/rss+xml"], link[type="application/atom+xml"], a[href*="rss"], a[href*="atom"], a[href*="feed"]'
     );
-    feeds_on_page.forEach((feed) => {
+
+    for (let i = 0; i < feeds_on_page.length; i++) {
+        const feed = feeds_on_page[i];
         if (feed instanceof HTMLLinkElement) {
             feed_urls.push(feed.href);
         }
-    });
+    }
+
     if (!feeds_on_page.length) {
         const possible_feed_files = ['index.xml', 'feed.xml', 'rss.xml', 'atom.xml', 'feed', 'rss', 'atom'];
         for (const file of possible_feed_files) {

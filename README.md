@@ -52,4 +52,5 @@ This extension is already available on the Firefox Add-ons store. You can instal
   - [ ] Custom JS
 - [ ] Some Improvoments to the UI
 - [ ] Add a way to scrape Youtube feeds without reload the page for chromium based browsers
+- [ ] Add `disable feed scan` button to the popup
 - [x] Test extension on chromium based browsers

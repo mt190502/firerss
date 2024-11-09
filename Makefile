@@ -1,6 +1,10 @@
 CHROMIUM_BUILD_DIR = $(shell pwd)/build/chromium
 FIREFOX_BUILD_DIR = $(shell pwd)/build/firefox
 
+ifeq (${CHROMIUM_PATH},)
+	CHROMIUM_PATH = /usr/bin/chromium-browser
+endif
+
 chromium:
 	npx tsc -p tsconfig.json
 	mkdir -p $(CHROMIUM_BUILD_DIR)/{html,css,js,img}
@@ -9,7 +13,7 @@ chromium:
 	cp manifest.chromium.json $(CHROMIUM_BUILD_DIR)/manifest.json
 	cp src/html/* $(CHROMIUM_BUILD_DIR)/html
 	cp src/css/* $(CHROMIUM_BUILD_DIR)/css
-	cd $(CHROMIUM_BUILD_DIR) && (find . -type f -not -name '*.zip' | zip -@ ../$(shell basename $(CHROMIUM_BUILD_DIR))-firerss.zip)
+	${CHROMIUM_PATH} --pack-extension=$(CHROMIUM_BUILD_DIR) --pack-extension-key=${HOME}/.ssh/crx.pem
 
 firefox:
 	npx tsc -p tsconfig.json

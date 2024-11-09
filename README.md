@@ -19,7 +19,7 @@ FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web pag
 3. Generate PEM key
 
    ```bash
-   mkdir ~/.ssh
+   mkdir ~/.ssh && cd ~/.ssh
    openssl genrsa 2048 | openssl pkcs8 -topk8 -nocrypt -out crx.pem
    ```
 

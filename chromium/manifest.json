@@ -4,7 +4,7 @@
     "name": "FireRSS - RSS and Atom feeds scraper",
     "short_name": "FireRSS",
     "description": "A RSS and Atom feeds scraper on the current page",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "homepage_url": "https://github.com/mt190502/firerss",
 
     "icons": {
@@ -26,31 +26,26 @@
     },
 
     "background": {
-        "scripts": ["js/background.js", "js/content.js"]
+        "service_worker": "js/background.js"
     },
 
-    "permissions": ["tabs", "scripting"],
+    "externally_connectable": {
+        "matches": ["*://*.google.com/*"]
+    },
+
+    "permissions": ["activeTab", "scripting", "storage"],
+
+    "options_ui": {
+        "page": "html/settings.html",
+        "open_in_tab": false
+    },
 
     "host_permissions": ["https://*/*", "http://*/*"],
 
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "firerss@mtaha.dev",
-            "strict_min_version": "130.0"
-        }
-    },
-
-    "content_scripts": [
+    "web_accessible_resources": [
         {
-            "matches": ["<all_urls>"],
-            "js": ["js/content.js"],
-            "run_at": "document_end"
+            "resources": ["js/youtube.js"],
+            "matches": ["https://www.youtube.com/*"]
         }
-    ],
-
-    "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self';"
-    },
-
-    "web_accessible_resources": [{ "resources": ["img/*"], "matches": ["<all_urls>"] }]
+    ]
 }

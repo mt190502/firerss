@@ -1,12 +1,10 @@
-* {
+html, body {
     font-size: 16px;
     font-family: Arial, sans-serif;
-}
-
-html, body {
     margin: 0;
     padding: 0;
     background-color: white;
+    color: black;
 }
 
 header, footer {
@@ -15,6 +13,10 @@ header, footer {
     color: white;
     padding: 10px 0;
     font-weight: bold;
+}
+
+footer {
+    margin-top: auto;
 }
 
 footer .logo-container {
@@ -27,7 +29,6 @@ footer .logo-container {
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
 }
 
 tr {
@@ -43,31 +44,9 @@ td {
     border-bottom: 1px solid #e5e7eb;
 }
 
-td.copy_button_area {
-    width: 80px;
-    text-align: center;
-}
-
 a, a:visited {
     color: black;
     text-decoration: none;
-}
-
-.copy_button {
-    background-color: #FF6600;
-    color: white;
-    border: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    font-size: 14px;
-}
-
-.copy_button:hover {
-    background-color: #e65c00;
-    color: white;
 }
 
 .col1, .col2 {
@@ -75,8 +54,31 @@ a, a:visited {
     padding-right: 10px;
 }
 
-.left-icons a img, .right-icons a img {
-    color: white;
-    width:  25px;
-    height: 25px;
+.left-icons * img, .right-icons * img {
+    width: 20px;
+    height: 20px;
 }
+
+html[data-theme='dark'] body {
+    background-color: #121212;
+    color: white;
+}
+
+html[data-theme='dark'] header, html[data-theme='dark'] footer {
+    background-color: #1F1F1F;
+    color: white;
+}
+
+html[data-theme='dark'] tr:hover {
+    background-color: #333333;
+}
+
+html[data-theme='dark'] td {
+    border-bottom: 1px solid #333333;
+}
+
+html[data-theme='dark'] a, html[data-theme='dark'] a:visited {
+    color: #b3b3b3;
+}
+
+

@@ -21,7 +21,7 @@ export default [
             '@typescript-eslint': typescriptEslint,
         },
 
-        ignores: ['node_modules', 'dist', 'build', '**/src/types/*/*'],
+        ignores: ['node_modules', 'dist', 'build', 'database', 'eslint.config.mjs', '**/webpack**'],
 
         languageOptions: {
             globals: {
@@ -29,6 +29,10 @@ export default [
             },
 
             parser: tsParser,
+            parserOptions: {
+                projectService: true,
+                project: ['./tsconfig.json', './chromium/tsconfig.json', './firefox/tsconfig.json'],
+            },
             ecmaVersion: 'latest',
             sourceType: 'module',
         },
@@ -41,7 +45,48 @@ export default [
                     after: true,
                 },
             ],
-
+            '@typescript-eslint/naming-convention': [
+                'error',
+                {
+                    selector: 'function',
+                    format: ['camelCase', 'PascalCase'],
+                },
+                {
+                    selector: 'variable',
+                    format: ['snake_case'],
+                },
+                {
+                    selector: 'variable',
+                    types: ['function'],
+                    format: ['camelCase', 'PascalCase'],
+                },
+                {
+                    selector: 'variable',
+                    modifiers: ['exported'],
+                    format: ['PascalCase'],
+                },
+                {
+                    selector: 'parameter',
+                    format: ['snake_case'],
+                },
+            ],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    vars: 'all',
+                    varsIgnorePattern: '^(?:[a-z]+[A-Z][a-z0-9]*|[A-Z][a-z0-9]*)([A-Z][a-z0-9]*)*$',
+                    args: 'after-used',
+                    caughtErrors: 'none',
+                    ignoreRestSiblings: true,
+                },
+            ],
+            'no-restricted-syntax': [
+                'error',
+                {
+                    selector: 'CallExpression[callee.property.name="forEach"]',
+                    message: 'Using "forEach" is not allowed. Please use "for...of" or a regular loop.',
+                },
+            ],
             'comma-spacing': [
                 'error',
                 {
@@ -49,12 +94,10 @@ export default [
                     after: true,
                 },
             ],
-
             'comma-style': 'error',
             curly: ['error', 'multi-line', 'consistent'],
             'dot-location': ['error', 'property'],
             'handle-callback-err': 'off',
-
             indent: [
                 'error',
                 4,
@@ -62,30 +105,25 @@ export default [
                     SwitchCase: 1,
                 },
             ],
-
             'keyword-spacing': 'error',
             'linebreak-style': ['error', 'unix'],
-
             'max-nested-callbacks': [
                 'error',
                 {
                     max: 4,
                 },
             ],
-
             'max-statements-per-line': [
                 'error',
                 {
                     max: 2,
                 },
             ],
-
             'no-console': 'off',
             'no-empty-function': 'error',
             'no-explicit-any': 'off',
             'no-floating-decimal': 'error',
             'no-inline-comments': 'error',
-
             'no-multiple-empty-lines': [
                 'error',
                 {
@@ -94,19 +132,16 @@ export default [
                     maxBOF: 0,
                 },
             ],
-
             'no-multi-spaces': 'error',
             'no-prototype-builtins': 'off',
-
             'no-shadow': [
                 'error',
                 {
                     allow: ['err', 'resolve', 'reject'],
                 },
             ],
-
             'no-trailing-spaces': 'error',
-            'no-unused-vars': 'error',
+            'no-unused-vars': 'off',
             'no-var': 'error',
             'object-curly-spacing': ['error', 'always'],
             'prefer-arrow-callback': 'error',
@@ -114,7 +149,6 @@ export default [
             quotes: ['error', 'single'],
             semi: ['error', 'always'],
             'space-before-blocks': 'error',
-
             'space-before-function-paren': [
                 'error',
                 {
@@ -123,7 +157,6 @@ export default [
                     asyncArrow: 'always',
                 },
             ],
-
             'spaced-comment': 'error',
             'space-infix-ops': 'error',
             'space-in-parens': 'error',

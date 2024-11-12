@@ -1,7 +1,18 @@
+import { applyTheme } from './lib/theme';
+import { Settings } from './types/settings_interface';
+
+let settings: Settings;
+
 const initPopup = async () => {
+    applyTheme(settings.theme);
+
     const url = new URL(window.location.href);
     const feed_urls: string[] = JSON.parse(url.searchParams.get('feedlinks'));
     const feed_list = document.getElementById('feed_url_list');
+
+    document.getElementById('settings_button').addEventListener('click', () => {
+        chrome.runtime.openOptionsPage();
+    });
 
     for (const feed_url of feed_urls) {
         const tr = document.createElement('tr');
@@ -26,7 +37,7 @@ const initPopup = async () => {
         td2.appendChild(copy_btn);
         tr.appendChild(td1);
         tr.appendChild(td2);
-        feed_list.appendChild(tr); 
+        feed_list.appendChild(tr);
     }
 
     const copy_buttons = document.querySelectorAll('.copy_button');
@@ -41,9 +52,11 @@ const initPopup = async () => {
         });
     }
 };
-
-if (document.readyState === 'interactive' || document.readyState === 'complete') {
-    initPopup();
-} else {
-    document.addEventListener('DOMContentLoaded', initPopup, { once: true });
-}
+chrome.storage.local.get('firerss_settings', (setting) => {
+    settings = setting.firerss_settings;
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        initPopup();
+    } else {
+        document.addEventListener('DOMContentLoaded', initPopup, { once: true });
+    }
+});

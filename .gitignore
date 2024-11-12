@@ -11,6 +11,8 @@ node_modules
 *.xpi
 *.zip
 *.crx
+**/test*
+test*
 
 # IDE
 .idea/

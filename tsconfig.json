@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "./src",
+        "baseUrl": ".",
+        "composite": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "lib": ["ES6", "DOM"],
-        "module": "ESNext",
+        "module": "CommonJS",
         "moduleResolution": "node",
         "noEmitOnError": true,
         "noImplicitAny": true,
@@ -18,11 +19,17 @@
             "*": ["node_modules/*"]
         },
         "resolveJsonModule": true,
-        "sourceMap": true,
-        "target": "ES6",
+        "removeComments": true,
+        "skipLibCheck": true,
+        "sourceMap": false,
+        "target": "ESNext",
         "typeRoots": ["node_modules/@types"]
     },
     "compileOnSave": true,
-    "exclude": ["node_modules/*", "**/*.test.ts", "**/*.spec.ts", "dist", "build", "**/css/*", "**/html/*"],
-    "include": ["./src/**/*"]
+    "exclude": ["node_modules/*", "dist", "build", "static", "**/*.spec.ts", "**/*.test.ts"],
+    "include": ["eslint.config.mjs", "webpack.*.ts", "**/webpack.common.ts", "**/webpack.dev.ts", "**/webpack.prod.ts"],
+    "references": [
+        { "path": "chromium/tsconfig.json" },
+        { "path": "firefox/tsconfig.json" }
+    ]
 }

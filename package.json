@@ -22,24 +22,37 @@
     },
     "homepage": "https://github.com/mt190502/firerss",
     "devDependencies": {
-        "@eslint/js": "^9.13.0",
+        "@eslint/js": "^9.14.0",
         "@types/chrome": "^0.0.280",
+        "@types/firefox": "^0.0.34",
         "@types/firefox-webext-browser": "^120.0.4",
-        "@types/node": "^22.7.7",
-        "@typescript-eslint/eslint-plugin": "^8.10.0",
-        "@typescript-eslint/parser": "^8.10.0",
-        "eslint": "^9.13.0",
+        "@types/node": "^22.9.0",
+        "@typescript-eslint/eslint-plugin": "^8.13.0",
+        "@typescript-eslint/parser": "^8.13.0",
+        "copy-webpack-plugin": "^12.0.2",
+        "eslint": "^9.14.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-prettier": "^5.2.1",
+        "glob": "^11.0.0",
+        "globals": "^15.12.0",
         "prettier": "^3.3.3",
+        "ts-loader": "^9.5.1",
+        "ts-node": "^10.9.2",
         "typescript": "^5.6.3",
-        "typescript-eslint": "^8.10.0"
+        "typescript-eslint": "^8.13.0",
+        "webpack": "^5.96.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-merge": "^6.0.1"
     },
     "scripts": {
         "depInstall": "pnpm install && pnpm update",
         "eslint": "eslint .",
         "eslint:fix": "eslint . --fix",
         "prettier": "prettier --config .prettierrc.json 'src/**/*.ts'",
-        "prettier:fix": "prettier --config .pretterrc.json 'src/**/*.ts' --write"
+        "prettier:fix": "prettier --config .pretterrc.json 'src/**/*.ts' --write",
+        "build:firefox": "webpack --mode=production --config firefox/webpack.common.ts",
+        "start:firefox": "webpack --mode=development --config firefox/webpack.dev.ts --watch",
+        "build:chromium": "webpack --mode=production --config chromium/webpack.common.ts",
+        "start:chromium": "webpack --mode=development --config chromium/webpack.dev.ts --watch"
     }
 }

@@ -1,0 +1,42 @@
+@import url("/css/base.css");
+
+td.feed_url > a {
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+td.copy_button_area {
+    width: 80px;
+    text-align: center;
+}
+
+.copy_button {
+    background-color: #FF6600;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 14px;
+}
+
+.copy_button:hover {
+    background-color: #e65c00;
+    color: white;
+}
+
+#settings_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#settings_button:hover {
+    content: "Settings";
+}

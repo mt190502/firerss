@@ -1,0 +1,66 @@
+{
+    "manifest_version": 3,
+
+    "name": "FireRSS - RSS and Atom feeds scraper",
+    "short_name": "FireRSS",
+    "description": "A RSS and Atom feeds scraper on the current page",
+    "version": "2.0.0",
+    "homepage_url": "https://github.com/mt190502/firerss",
+
+    "icons": {
+        "32": "img/firerss_32.png",
+        "64": "img/firerss_64.png",
+        "128": "img/firerss_128.png",
+        "256": "img/firerss_256.png",
+        "512": "img/firerss_512.png"
+    },
+    "action": {
+        "default_popup": "html/popup.html",
+        "default_icon": {
+            "32": "img/firerss_32_gray.png",
+            "64": "img/firerss_64_gray.png",
+            "128": "img/firerss_128_gray.png",
+            "256": "img/firerss_256_gray.png",
+            "512": "img/firerss_512_gray.png"
+        }
+    },
+
+    "background": {
+        "scripts": ["js/background.js", "js/content.js"]
+    },
+
+    "permissions": ["tabs", "scripting", "storage"],
+
+    "host_permissions": ["<all_urls>"],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "firerss@mtaha.dev",
+            "strict_min_version": "130.0"
+        }
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/content.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "options_ui": {
+        "page": "html/settings.html"
+    },
+
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+
+    "web_accessible_resources": [
+        { "resources": ["img/*"], "matches": ["<all_urls>"] },
+        {
+            "resources": ["js/youtube.js"],
+            "matches": ["https://www.youtube.com/*"]
+        }
+    ]
+}

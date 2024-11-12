@@ -1,0 +1,42 @@
+@import url("/css/base.css");
+
+html, body {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+@supports(-webkit-tap-highlight-color: black) {
+    html, body {
+        width: 700px;
+    }
+}
+
+textarea {
+    resize: vertical;
+    text-wrap: nowrap;
+    width: 200px;
+}
+
+td.setting_key_area {
+    text-align: left;
+}
+
+td.setting_value_area {
+    text-align: right;
+}
+
+.theme_button {
+    border: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 14px;
+}
+
+.active {
+    background-color: #e65c00;
+    color: white;
+}

@@ -1,4 +1,4 @@
-# FireRSS [WIP]
+# FireRSS
 
 FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web page.
 

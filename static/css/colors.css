@@ -1,0 +1,46 @@
+html, body {
+    background-color: var(--bg-light, white);
+    color: var(--fg-light, black);
+}
+
+html[color-scheme='dark'] {
+    --bg-light: var(--bg-dark, #121212);
+    --fg-light: var(--fg-dark, white);
+    --active-light: var(--active-dark);
+    --inactive-light: var(--inactive-dark, #333333);
+}
+
+header, footer,
+.help-icon,
+.copy_button {
+    background-color: var(--active-light, #FF6600);
+    color: var(--fg-light, white);
+}
+
+tr:hover {
+    background-color: var(--inactive-light, #E0E0E0);
+}
+
+td {
+    border-bottom: 1px solid var(--bg-light, #E5E7EB);
+}
+
+a, a:visited {
+    color: var(--fg-light, black);
+}
+
+.active, html[color-scheme='dark'] .active {
+    background-color: var(--active-light, #FF6600);
+    color: var(--fg-light, white);
+}
+
+.help-icon::after {
+    background-color: var(--inactive-light, rgba(0, 0, 0, 0.8));
+    color: var(--fg-light, white);
+}
+
+.copy_button:hover {
+    background-color: var(--active-light, #e65c00);
+    color: var(--fg-light, white);
+}
+

@@ -14,8 +14,6 @@ td.copy_button_area {
 }
 
 .copy_button {
-    background-color: #FF6600;
-    color: white;
     border: none;
     font-weight: bold;
     padding: 8px 12px;
@@ -23,11 +21,6 @@ td.copy_button_area {
     border-radius: 4px;
     transition: background-color 0.2s ease, color 0.2s ease;
     font-size: 14px;
-}
-
-.copy_button:hover {
-    background-color: #e65c00;
-    color: white;
 }
 
 #settings_button {

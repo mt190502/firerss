@@ -1,27 +1,29 @@
 import { Settings } from '../types/settings_interface';
 
-export const applyTheme = (theme?: Settings['theme']) => {
-    switch (theme) {
-        case 'light':
-            document.documentElement.setAttribute('data-theme', 'light');
-            break;
-        case 'dark':
-            document.documentElement.setAttribute('data-theme', 'dark');
-            break;
-        case 'system': {
-            const system_prefers_dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            document.documentElement.setAttribute('data-theme', system_prefers_dark ? 'dark' : 'light');
-            break;
+export const ApplyTheme = (theme?: Settings['theme']) => {
+    if (theme.name === 'default') {
+        document.documentElement.removeAttribute('style');
+    } else {
+        for (const key in theme.colors) {
+            document.documentElement.style.setProperty(`--bg-${key}`, theme.colors[key].background);
+            document.documentElement.style.setProperty(`--fg-${key}`, theme.colors[key].foreground);
+            document.documentElement.style.setProperty(`--active-${key}`, theme.colors[key].active);
+            document.documentElement.style.setProperty(`--inactive-${key}`, theme.colors[key].inactive);
+            document.documentElement.style.setProperty(`--select-${key}`, theme.colors[key].selection);
+            document.documentElement.style.setProperty(`--comment-${key}`, theme.colors[key].comment);
+            document.documentElement.style.setProperty(`--cyan-${key}`, theme.colors[key].cyan);
+            document.documentElement.style.setProperty(`--green-${key}`, theme.colors[key].green);
+            document.documentElement.style.setProperty(`--orange-${key}`, theme.colors[key].orange);
+            document.documentElement.style.setProperty(`--pink-${key}`, theme.colors[key].pink);
+            document.documentElement.style.setProperty(`--purple-${key}`, theme.colors[key].purple);
+            document.documentElement.style.setProperty(`--red-${key}`, theme.colors[key].red);
+            document.documentElement.style.setProperty(`--yellow-${key}`, theme.colors[key].yellow);
         }
     }
 };
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    applyTheme(e.matches ? 'dark' : 'light');
-});
-
 browser.storage.local.onChanged.addListener((changes) => {
     if (changes.firerss_settings) {
-        applyTheme(changes.firerss_settings.newValue.theme);
+        ApplyTheme(changes.firerss_settings.newValue.theme);
     }
 });

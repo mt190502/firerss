@@ -1,10 +1,12 @@
-import { applyTheme } from './lib/theme';
+import { ApplyColorScheme } from './lib/color_scheme';
+import { ApplyTheme } from './lib/theme';
 import { Settings } from './types/settings_interface';
 
 let settings: Settings;
 
 const initPopup = async () => {
-    applyTheme(settings.theme);
+    ApplyColorScheme(settings.color_scheme);
+    ApplyTheme(settings.theme);
 
     const url = new URL(window.location.href);
     const feed_urls: string[] = JSON.parse(url.searchParams.get('feedlinks'));

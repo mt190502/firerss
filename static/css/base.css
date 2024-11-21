@@ -1,6 +1,6 @@
+@import url("/css/colors.css");
+
 html, body {
-    background-color: white;
-    color: black;
     font-family: Arial, sans-serif;
     font-size: 16px;
     margin: 0;
@@ -9,9 +9,7 @@ html, body {
 }
 
 header, footer {
-    background-color: #FF6600;
     text-align: center;
-    color: white;
     padding: 10px 0;
     font-weight: bold;
 }
@@ -37,17 +35,11 @@ tr {
     height: 60px;
 }
 
-tr:hover {
-    background-color: #e0e0e0;
-}
-
 td {
     padding: 10px;
-    border-bottom: 1px solid #e5e7eb;
 }
 
 a, a:visited {
-    color: black;
     text-decoration: none;
 }
 
@@ -61,32 +53,8 @@ a, a:visited {
     height: 20px;
 }
 
-html[data-theme='dark'] body {
-    background-color: #121212;
-    color: white;
-}
-
-html[data-theme='dark'] header, html[data-theme='dark'] footer {
-    background-color: #1F1F1F;
-    color: white;
-}
-
-html[data-theme='dark'] tr:hover {
-    background-color: #333333;
-}
-
-html[data-theme='dark'] td {
-    border-bottom: 1px solid #333333;
-}
-
-html[data-theme='dark'] a, html[data-theme='dark'] a:visited {
-    color: #b3b3b3;
-}
-
 .help-icon {
-    background-color: #FF8000;
     border-radius: 50%;
-    color: white;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
@@ -100,10 +68,8 @@ html[data-theme='dark'] a, html[data-theme='dark'] a:visited {
 }
 
 .help-icon::after {
-    background-color: rgba(0, 0, 0, 0.8);
     border-radius: 4px;
     bottom: 150%;
-    color: white;
     content: attr(aria-label);
     font-size: 12px;
     left: 50%;

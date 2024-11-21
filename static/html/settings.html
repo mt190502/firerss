@@ -10,13 +10,21 @@
         <header>FireRSS</header>
         <table id="settings">
             <tr>
-                <td class="col1 setting_key_area">Theme Variant</td>
+                <td class="col1 setting_key_area">Color Scheme Variant</td>
                 <td class="col2 setting_value_area">
                     <div class="button-group">
-                        <button class="theme_button" value="light">Light</button>
-                        <button class="theme_button" value="dark">Dark</button>
-                        <button class="theme_button" value="system">System</button>
+                        <button class="color_scheme_button" value="light">Light</button>
+                        <button class="color_scheme_button" value="dark">Dark</button>
+                        <button class="color_scheme_button" value="system">System</button>
                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col1 setting_key_area">Theme</td>
+                <td class="col2 setting_value_area">
+                    <select id="theme_selector">
+                        <option value="default">Default</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -36,7 +44,7 @@
                 <td class="col2 setting_value_area">
                     <div class="button-group">
                         <button class="extended_feed_scan_button" value="2">On</button>
-                        <button class="extended_feed_scan_button" value="1">If No Feeds Found</button>
+                        <button class="extended_feed_scan_button" value="1">If No Feed Found</button>
                         <button class="extended_feed_scan_button" value="0">Off</button>
                 </td>
             </tr>

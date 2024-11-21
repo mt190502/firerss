@@ -12,7 +12,7 @@ html, body {
     }
 }
 
-textarea {
+select, textarea {
     resize: vertical;
     text-wrap: nowrap;
     width: 200px;
@@ -26,7 +26,7 @@ td.setting_value_area {
     text-align: right;
 }
 
-.theme_button, .extended_feed_scan_button {
+.color_scheme_button, .extended_feed_scan_button {
     border: none;
     font-weight: bold;
     padding: 8px 12px;
@@ -36,7 +36,3 @@ td.setting_value_area {
     font-size: 14px;
 }
 
-.active {
-    background-color: #e65c00;
-    color: white;
-}

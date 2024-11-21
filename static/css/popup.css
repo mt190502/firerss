@@ -1,6 +1,7 @@
 @import url("/css/base.css");
 
 td.feed_url > a {
+    width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

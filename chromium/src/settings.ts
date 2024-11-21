@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     for (const theme of themes) {
         const option = document.createElement('option');
         option.value = theme.download_url;
-        option.innerText = theme.name.charAt(0).toUpperCase() + theme.name.slice(1);
+        option.innerText = theme.name.charAt(0).toUpperCase() + theme.name.slice(1).replace('.json', '');
         theme_selector.appendChild(option);
     }
 

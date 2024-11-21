@@ -12,12 +12,12 @@ html[color-scheme='dark'] body {
 
 header, footer {
     background-color: var(--active-light, #FF6600);
-    color: var(--fg-light, white);
+    color: var(--bg-dark, white);
 }
 
 html[color-scheme='dark'] header, html[color-scheme='dark'] footer {
     background-color: var(--active-dark, #1F1F1F);
-    color: var(--fg-dark, white);
+    color: var(--bg-light, white);
 }
 
 
@@ -99,12 +99,13 @@ html[color-scheme='dark'] .copy_button:hover {
 }
 
 
+
 .active {
     background-color: var(--active-light, #FF6600);
-    color: var(--fg-light, white);
+    color: var(--bg-dark, white);
 }
 
 html[color-scheme='dark'] .active {
     background-color: var(--active-dark, #FF6600);
-    color: var(--fg-dark, white);
+    color: var(--bg-light, white);
 }

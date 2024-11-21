@@ -45,6 +45,7 @@ const enableIcon = (tab_id: number, feed_urls?: string[]) => {
     chrome.action.setIcon({ path: '/img/firerss_32.png', tabId: tab_id });
     if (feed_urls && feed_urls.length > 0) {
         chrome.action.setBadgeText({ text: feed_urls.length.toString(), tabId: tab_id });
+        chrome.action.setBadgeBackgroundColor({ color: '#FF6600', tabId: tab_id });
         chrome.action.setTitle({ title: 'FireRSS (Found ' + feed_urls.length + ' feeds)', tabId: tab_id });
     } else {
         chrome.action.setTitle({ title: 'FireRSS', tabId: tab_id });
@@ -72,6 +73,7 @@ const getTabFromId = (tab_id: number): Promise<chrome.tabs.Tab> => {
 };
 
 const findAllFeeds = async (): Promise<string[]> => {
+    const settings = (await chrome.storage.local.get('firerss_settings')).firerss_settings ?? InitDefaultSettings();
     const feed_urls: string[] = [];
     const youtube_user_pattern = /(?<=(https:\/\/(www\.)?youtube.com\/))@\w+/gi;
     let doc: Document;
@@ -97,16 +99,41 @@ const findAllFeeds = async (): Promise<string[]> => {
         }
     }
 
-    if (!collected_feeds.length) {
-        const possible_feed_files = ['index.xml', 'feed.xml', 'rss.xml', 'atom.xml', 'feed', 'rss', 'atom'];
-        for (const file of possible_feed_files) {
-            const feed = window.location.origin + '/' + file;
-            const response = await fetch(feed);
-            if (response.ok && response.headers.get('Content-Type')?.includes('xml')) {
-                feed_urls.push(feed);
-                break;
+    if (settings.extended_feed_scan === 0) {
+        return feed_urls;
+    } else if (settings.extended_feed_scan === 1) {
+        if (feed_urls.length > 0) return feed_urls;
+    }
+    const possible_feed_files = [
+        '.atom',
+        '.feed',
+        '.rss',
+        '.xml',
+        '/atom.xml',
+        '/atom',
+        '/feed.xml',
+        '/feed',
+        '/index.xml',
+        '/rss.xml',
+        '/rss',
+    ];
+    for (const file of possible_feed_files) {
+        let feed;
+        if (window.location.pathname === '/') {
+            if (file.startsWith('.')) continue;
+            feed = window.location.href + file.slice(1);
+        } else {
+            if (file.startsWith('.')) {
+                feed = window.location.href.slice(0, window.location.href.lastIndexOf('/')) + file;
+            } else {
+                feed = window.location.origin + file;
             }
         }
+        const response = await fetch(feed);
+        if (response.ok && response.headers.get('Content-Type')?.includes('xml') && !feed_urls.includes(feed)) {
+            feed_urls.push('_' + feed);
+        }
+        await new Promise((resolve) => setTimeout(resolve, 700));
     }
 
     return feed_urls;
@@ -130,25 +157,38 @@ const injectScript = (tab_id: number) => {
                 return;
             }
         }
-        const injection = await chrome.scripting.executeScript({
-            target: { tabId: tab_id },
-            func: findAllFeeds,
-        });
 
-        if (!chrome.runtime.lastError) {
-            const feed_urls: string[] = [];
-            for (const result of injection) {
-                feed_urls.push(...result.result);
-            }
-
-            if (feed_urls.length > 0) {
-                updatePopupState(tab_id, feed_urls);
+        chrome.storage.session.get(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`, async (cached_feeds) => {
+            const manually_finded_feeds: string[] = cached_feeds[`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`];
+            if (manually_finded_feeds && manually_finded_feeds.length > 0) {
+                updatePopupState(tab_id, manually_finded_feeds);
+                return;
             } else {
-                disableIcon(tab_id, Status.NO_FEEDS);
+                const injection = await chrome.scripting.executeScript({
+                    target: { tabId: tab_id },
+                    func: findAllFeeds,
+                });
+
+                if (!chrome.runtime.lastError) {
+                    const feed_urls: string[] = [];
+                    for (const result of injection) {
+                        feed_urls.push(...result.result);
+                    }
+
+                    if (feed_urls.length > 0) {
+                        chrome.storage.session.set({
+                            [`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`]: feed_urls,
+                        });
+                        updatePopupState(tab_id, feed_urls);
+                    } else {
+                        chrome.storage.session.set({ [`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`]: [] });
+                        disableIcon(tab_id, Status.NO_FEEDS);
+                    }
+                } else {
+                    console.error(`Error: FireRSS: ${chrome.runtime.lastError.message}`);
+                }
             }
-        } else {
-            console.error(`Error: FireRSS: ${chrome.runtime.lastError.message}`);
-        }
+        });
     });
 };
 

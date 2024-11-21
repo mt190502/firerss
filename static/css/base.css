@@ -1,10 +1,11 @@
 html, body {
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: white;
     color: black;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    width: 500px;
 }
 
 header, footer {
@@ -33,6 +34,7 @@ table {
 
 tr {
     transition: background-color 0.2s ease;
+    height: 60px;
 }
 
 tr:hover {
@@ -49,7 +51,7 @@ a, a:visited {
     text-decoration: none;
 }
 
-.col1, .col2 {
+.col1, .col2, .col3 {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -81,4 +83,41 @@ html[data-theme='dark'] a, html[data-theme='dark'] a:visited {
     color: #b3b3b3;
 }
 
+.help-icon {
+    background-color: #FF8000;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 16px;
+    line-height: 16px;
+    position: relative;
+    text-align: center;
+    user-select: none;
+    width: 16px;
+}
 
+.help-icon::after {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    bottom: 150%;
+    color: white;
+    content: attr(aria-label);
+    font-size: 12px;
+    left: 50%;
+    opacity: 0;
+    padding: 6px 8px;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: opacity 0.2s, visibility 0.2s;
+    visibility: hidden;
+    white-space: pre-wrap;
+    width: 150px;
+}
+
+.help-icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}

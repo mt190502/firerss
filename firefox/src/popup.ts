@@ -14,15 +14,25 @@ const initPopup = async () => {
         browser.runtime.openOptionsPage();
     });
 
-    for (const feed_url of feed_urls) {
+    for (let feed_url of feed_urls) {
         const tr = document.createElement('tr');
         const td1 = document.createElement('td');
         const td2 = document.createElement('td');
+        const td3 = document.createElement('td');
         const a = document.createElement('a');
+        const info_div = document.createElement('div');
         const copy_btn = document.createElement('button');
 
+        if (feed_url.startsWith('_')) {
+            info_div.setAttribute('class', 'help-icon');
+            info_div.setAttribute('aria-label', 'This feed was found by Extended Feed Scan');
+            info_div.innerText = '!';
+            feed_url = feed_url.slice(1);
+        }
+
         td1.setAttribute('class', 'col1 feed_url');
-        td2.setAttribute('class', 'col2 copy_button_area');
+        td2.setAttribute('class', 'col2 info_button_area');
+        td3.setAttribute('class', 'col3 copy_button_area');
         a.setAttribute('class', 'feed_url_link');
         a.setAttribute('target', '_blank');
         a.setAttribute('href', feed_url);
@@ -34,9 +44,14 @@ const initPopup = async () => {
         copy_btn.innerText = 'Copy';
 
         td1.appendChild(a);
-        td2.appendChild(copy_btn);
+        if (info_div.innerText) {
+            td2.appendChild(info_div);
+            td2.appendChild(document.createTextNode('\u00A0'));
+        }
+        td3.appendChild(copy_btn);
         tr.appendChild(td1);
         tr.appendChild(td2);
+        tr.appendChild(td3);
         feed_list.appendChild(tr);
     }
 

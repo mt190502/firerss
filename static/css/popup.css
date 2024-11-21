@@ -1,11 +1,11 @@
 @import url("/css/base.css");
 
 td.feed_url > a {
-    width: 400px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
+    margin-top: 5px;
 }
 
 td.copy_button_area {
@@ -35,8 +35,4 @@ td.copy_button_area {
     border: none;
     cursor: pointer;
     font-size: 14px;
-}
-
-#settings_button:hover {
-    content: "Settings";
 }

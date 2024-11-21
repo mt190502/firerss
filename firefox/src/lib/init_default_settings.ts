@@ -4,7 +4,8 @@ export const InitDefaultSettings = (): Settings => {
     const settings: Settings = {
         theme: 'system',
         ignored_sites: ['(.*).hetzner.(.*)'],
+        extended_feed_scan: 0,
     };
-    browser.storage.local.set({ firerss_settings: settings });
+    chrome.storage.local.set({ firerss_settings: settings });
     return settings;
 };

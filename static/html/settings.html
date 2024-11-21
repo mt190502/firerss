@@ -10,19 +10,34 @@
         <header>FireRSS</header>
         <table id="settings">
             <tr>
-                <td class="col1 setting_key_area">Theme</td>
+                <td class="col1 setting_key_area">Theme Variant</td>
                 <td class="col2 setting_value_area">
                     <div class="button-group">
-                        <button class="theme_button" id="theme_button_light">Light</button>
-                        <button class="theme_button" id="theme_button_dark">Dark</button>
-                        <button class="theme_button" id="theme_button_system">System</button>
+                        <button class="theme_button" value="light">Light</button>
+                        <button class="theme_button" value="dark">Dark</button>
+                        <button class="theme_button" value="system">System</button>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td class="col1 setting_key_area">Ignored URLs (regex or string)</td>
+                <td class="col1 setting_key_area">
+                    Ignored URLs
+                    <div class="help-icon" aria-label="Disable feed scan for the URLs listed here (supports regex, one per line)">?</div>
+                </td>
                 <td class="col2 setting_value_area">
-                    <textarea class="ignored_urls_textarea" id="ignored_urls"></textarea>
+                    <textarea id="ignored_urls"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="col1 setting_key_area">
+                    Extended Feed Scan
+                    <div class="help-icon" aria-label="Enable extended feed scan to current website. Note: This may slow down the feed loading and some websites detect this as a bot.">?</div>
+                </td>
+                <td class="col2 setting_value_area">
+                    <div class="button-group">
+                        <button class="extended_feed_scan_button" value="2">On</button>
+                        <button class="extended_feed_scan_button" value="1">If No Feeds Found</button>
+                        <button class="extended_feed_scan_button" value="0">Off</button>
                 </td>
             </tr>
         </table>

@@ -1,9 +1,9 @@
 @import url("/css/base.css");
 
 html, body {
-    height: 300px;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 @supports(-webkit-tap-highlight-color: black) {
@@ -26,7 +26,7 @@ td.setting_value_area {
     text-align: right;
 }
 
-.theme_button {
+.theme_button, .extended_feed_scan_button {
     border: none;
     font-weight: bold;
     padding: 8px 12px;

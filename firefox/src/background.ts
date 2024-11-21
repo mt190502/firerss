@@ -46,6 +46,7 @@ const enableIcon = (tab_id: number, feed_urls?: string[]) => {
     browser.action.setIcon({ path: '/img/firerss_32.png', tabId: tab_id });
     if (feed_urls && feed_urls.length > 0) {
         browser.action.setBadgeText({ text: feed_urls.length.toString(), tabId: tab_id });
+        browser.action.setBadgeBackgroundColor({ color: '#FF6600', tabId: tab_id });
         browser.action.setTitle({ title: 'FireRSS (Found ' + feed_urls.length + ' feeds)', tabId: tab_id });
     } else {
         browser.action.setTitle({ title: 'FireRSS', tabId: tab_id });
@@ -87,6 +88,18 @@ const injectScript = async (tab_id: number, tab_info?: browser.tabs.Tab) => {
             return;
         }
     }
+
+    const cached_feeds = sessionStorage.getItem(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`);
+    if (cached_feeds) {
+        if (JSON.parse(cached_feeds).length > 0) {
+            enableIcon(tab_id, JSON.parse(cached_feeds));
+            updatePopupState(tab_id, JSON.parse(cached_feeds));
+        } else {
+            disableIcon(tab_id, Status.NO_FEEDS);
+        }
+        return;
+    }
+
     const injection = await browser.scripting.executeScript({
         target: { tabId: tab_id },
         func: findAllFeeds,
@@ -99,8 +112,10 @@ const injectScript = async (tab_id: number, tab_info?: browser.tabs.Tab) => {
         }
 
         if (feed_urls.length > 0) {
+            sessionStorage.setItem(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`, JSON.stringify(feed_urls));
             updatePopupState(tab_id, feed_urls);
         } else {
+            sessionStorage.setItem(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`, JSON.stringify([]));
             disableIcon(tab_id, Status.NO_FEEDS);
         }
     } else {

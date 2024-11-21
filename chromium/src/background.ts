@@ -73,7 +73,8 @@ const getTabFromId = (tab_id: number): Promise<chrome.tabs.Tab> => {
 };
 
 const findAllFeeds = async (): Promise<string[]> => {
-    const settings = (await chrome.storage.local.get('firerss_settings')).firerss_settings ?? InitDefaultSettings();
+    const settings =
+        (await chrome.storage.local.get('firerss_settings')).firerss_settings ?? (await InitDefaultSettings());
     const feed_urls: string[] = [];
     const youtube_user_pattern = /(?<=(https:\/\/(www\.)?youtube.com\/))@\w+/gi;
     let doc: Document;
@@ -141,7 +142,7 @@ const findAllFeeds = async (): Promise<string[]> => {
 
 const injectScript = (tab_id: number) => {
     chrome.storage.local.get('firerss_settings', async (setting) => {
-        const settings = setting.firerss_settings ?? InitDefaultSettings();
+        const settings = setting.firerss_settings ?? (await InitDefaultSettings());
         const tab_info = await getTabFromId(tab_id);
 
         if (!tab_info) return;

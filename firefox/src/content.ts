@@ -1,7 +1,8 @@
 import { InitDefaultSettings } from './lib/init_default_settings';
 
 export const findAllFeeds = async (): Promise<string[]> => {
-    const settings = (await browser.storage.local.get('firerss_settings')).firerss_settings ?? InitDefaultSettings();
+    const settings =
+        (await browser.storage.local.get('firerss_settings')).firerss_settings ?? (await InitDefaultSettings());
     const feed_urls: string[] = [];
     const youtube_user_pattern = /(?<=(https:\/\/(www\.)?youtube.com\/))@\w+/gi;
     let doc: Document;

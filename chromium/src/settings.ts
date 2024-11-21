@@ -46,11 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     ignored_urls_textarea.addEventListener('change', () => SaveIgnoredSites());
 
-    chrome.storage.local.get('firerss_settings', (setting) => {
-        settings = setting.firerss_settings || InitDefaultSettings();
-        ChangeTheme(settings.theme);
-        ToggleExtendedFeedScan(settings.extended_feed_scan);
+    chrome.storage.local.get('firerss_settings', async (setting) => {
+        settings = setting.firerss_settings;
+        const default_settings: Settings = await InitDefaultSettings();
+
+        for (const key of Object.keys(default_settings) as (keyof Settings)[]) {
+            if (settings[key] === undefined) {
+                (settings[key] as unknown) = default_settings[key];
+            }
+        }
+
         applyTheme(settings.theme);
-        ignored_urls_textarea.value = settings.ignored_sites.join('\n') || '';
+        ChangeTheme(settings.theme);
+        ToggleExtendedFeedScan(settings?.extended_feed_scan);
+        ignored_urls_textarea.value = settings?.ignored_sites.join('\n') || '';
     });
 });

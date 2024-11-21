@@ -48,7 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     (async () => {
         const settings_storage = await browser.storage.local.get('firerss_settings');
-        settings = settings_storage.firerss_settings || InitDefaultSettings();
+
+        settings = settings_storage.firerss_settings;
+        const default_settings: Settings = await InitDefaultSettings();
+
+        for (const key of Object.keys(default_settings) as (keyof Settings)[]) {
+            if (settings[key] === undefined) {
+                (settings[key] as unknown) = default_settings[key];
+            }
+        }
+
         ChangeTheme(settings.theme);
         ToggleExtendedFeedScan(settings.extended_feed_scan);
         applyTheme(settings.theme);

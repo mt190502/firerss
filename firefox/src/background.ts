@@ -66,7 +66,8 @@ const updatePopupState = (tab_id: number, feed_urls: string[]) => {
 };
 
 const injectScript = async (tab_id: number, tab_info?: browser.tabs.Tab) => {
-    const settings = (await browser.storage.local.get('firerss_settings')).firerss_settings ?? InitDefaultSettings();
+    const settings =
+        (await browser.storage.local.get('firerss_settings')).firerss_settings ?? (await InitDefaultSettings());
     if (!tab_info) {
         while (tab_info === undefined) {
             tab_info = await browser.tabs.get(tab_id);

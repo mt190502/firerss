@@ -4,6 +4,7 @@ export const ApplyTheme = (theme?: Settings['theme']) => {
     if (theme.name === 'default') {
         document.documentElement.removeAttribute('style');
     } else {
+        document.documentElement.removeAttribute('style');
         for (const key in theme.colors) {
             document.documentElement.style.setProperty(`--bg-${key}`, theme.colors[key].background);
             document.documentElement.style.setProperty(`--fg-${key}`, theme.colors[key].foreground);

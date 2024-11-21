@@ -3,44 +3,108 @@ html, body {
     color: var(--fg-light, black);
 }
 
-html[color-scheme='dark'] {
-    --bg-light: var(--bg-dark, #121212);
-    --fg-light: var(--fg-dark, white);
-    --active-light: var(--active-dark);
-    --inactive-light: var(--inactive-dark, #333333);
+html[color-scheme='dark'] body {
+    background-color: var(--bg-dark, #121212);
+    color: var(--fg-dark, white);
 }
 
-header, footer,
-.help-icon,
-.copy_button {
+
+
+header, footer {
     background-color: var(--active-light, #FF6600);
     color: var(--fg-light, white);
 }
+
+html[color-scheme='dark'] header, html[color-scheme='dark'] footer {
+    background-color: var(--active-dark, #1F1F1F);
+    color: var(--fg-dark, white);
+}
+
+
 
 tr:hover {
     background-color: var(--inactive-light, #E0E0E0);
 }
 
+html[color-scheme='dark'] tr:hover {
+    background-color: var(--inactive-dark, #333333);
+}
+
+
+
 td {
     border-bottom: 1px solid var(--bg-light, #E5E7EB);
 }
+
+html[color-scheme='dark'] td {
+    border-bottom: 1px solid var(--bg-dark, #333333);
+}
+
+
 
 a, a:visited {
     color: var(--fg-light, black);
 }
 
-.active, html[color-scheme='dark'] .active {
+html[color-scheme='dark'] a, html[color-scheme='dark'] a:visited {
+    color: var(--fg-dark, #b3b3b3);
+}
+
+
+
+.help-icon {
     background-color: var(--active-light, #FF6600);
     color: var(--fg-light, white);
 }
+
+html[color-scheme='dark'] .help-icon {
+    background-color: var(--active-dark, #1F1F1F);
+    color: var(--fg-dark, white);
+}
+
+
 
 .help-icon::after {
     background-color: var(--inactive-light, rgba(0, 0, 0, 0.8));
     color: var(--fg-light, white);
 }
 
+html[color-scheme='dark'] .help-icon::after {
+    background-color: var(--inactive-dark, rgba(255, 255, 255, 0.8));
+    color: var(--fg-dark, black);
+}
+
+
+
+.copy_button {
+    background-color: var(--active-light, #FF6600);
+    color: var(--fg-light, white);
+}
+
+html[color-scheme='dark'] .copy_button {
+    background-color: var(--active-dark, #1F1F1F);
+    color: var(--fg-dark, white);
+}
+
+
+
 .copy_button:hover {
     background-color: var(--active-light, #e65c00);
     color: var(--fg-light, white);
 }
 
+html[color-scheme='dark'] .copy_button:hover {
+    background-color: var(--active-dark, #ff8000);
+    color: var(--fg-dark, white);
+}
+
+
+.active {
+    background-color: var(--active-light, #FF6600);
+    color: var(--fg-light, white);
+}
+
+html[color-scheme='dark'] .active {
+    background-color: var(--active-dark, #FF6600);
+    color: var(--fg-dark, white);
+}

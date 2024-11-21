@@ -1,6 +1,6 @@
 {
     "name": "firerss",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "description": "A RSS and Atom feeds scraper on the current page",
     "repository": {
         "type": "git",

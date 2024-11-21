@@ -2,9 +2,9 @@
   "theme": "Gruvbox",
   "author": "Yağız (saveside)",
   "colors": {
-      "dark": {
+      "light": {
           "background": "#fbf1c7",
-          "foreground": "#3c3836",
+          "foreground": "#ebdbb2",
           "active": "#458588",
           "inactive": "#928374",
           "selection": "#458588",
@@ -19,7 +19,7 @@
       
       
       },
-      "light": {
+      "dark": {
           "background": "#282828",
           "foreground": "#ebdbb2",
           "active": "#458588",

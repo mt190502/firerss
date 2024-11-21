@@ -1,38 +1,36 @@
 {
   "theme": "Gruvbox",
   "author": "Yağız (saveside)",
-  "colors": {
-      "light": {
-          "background": "#fbf1c7",
-          "foreground": "#ebdbb2",
-          "active": "#458588",
-          "inactive": "#928374",
-          "selection": "#458588",
-          "comment": "#076678",
-          "cyan": "#689d6a",
-          "green": "#98971a",
-          "orange": "#d65d0e",
-          "pink": "#b16286",
-          "purple": "#8f3f71",
-          "red": "#cc241d",
-          "yellow": "#d79921"
-      
-      
-      },
-      "dark": {
-          "background": "#282828",
-          "foreground": "#ebdbb2",
-          "active": "#458588",
-          "inactive": "#928374",
-          "selection": "#458588",
-          "comment": "#83a598",
-          "cyan": "#8ec07c",
-          "green": "#b8bb26",
-          "orange": "#fe8019",
-          "pink": "#d3869b",
-          "purple": "#b16286",
-          "red": "#fb4934",
-          "yellow": "#fabd2f"
-      }
-  }
+    "colors": {
+        "light": {
+            "background": "#fbf1c7",
+            "foreground": "#3c3836",
+            "active": "#458588",
+            "inactive": "#928374",
+            "selection": "#458588",
+            "comment": "#076678",
+            "cyan": "#689d6a",
+            "green": "#98971a",
+            "orange": "#d65d0e",
+            "pink": "#b16286",
+            "purple": "#8f3f71",
+            "red": "#cc241d",
+            "yellow": "#d79921"
+        },
+        "dark": {
+            "background": "#282828",
+            "foreground": "#ebdbb2",
+            "active": "#458588",
+            "inactive": "#928374",
+            "selection": "#458588",
+            "comment": "#83a598",
+            "cyan": "#8ec07c",
+            "green": "#b8bb26",
+            "orange": "#fe8019",
+            "pink": "#d3869b",
+            "purple": "#b16286",
+            "red": "#fb4934",
+            "yellow": "#fabd2f"
+        }
+    }
 }

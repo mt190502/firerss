@@ -2,6 +2,9 @@
 
 FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web page.
 
+![image](https://github.com/user-attachments/assets/f3b02ade-8512-4a36-8855-1b219a48bbdf)
+
+
 ## Installation (Chrome)
 
 - **Note**: This extension is not available on the Chrome Web Store. You can install it manually by following the steps below.

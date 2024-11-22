@@ -1,0 +1,21 @@
+{
+  "theme": "Nord",
+  "author": "Save (saveside)",
+  "colors": {
+      "dark": {
+          "background": "#2E3440",
+          "foreground": "#ECEFF4",
+          "active": "#88C0D0",
+          "inactive": "#434C5E",
+          "selection": "#88C0D0",
+          "comment": "#81A1C1",
+          "cyan": "#8FBCBB",
+          "green": "#8FBCBB",
+          "orange": "#D08770",
+          "pink": "#b48ead",
+          "purple": "#b48ead",
+          "red": "#bf616a",
+          "yellow": "#EBCB8B"
+      }
+  }
+}

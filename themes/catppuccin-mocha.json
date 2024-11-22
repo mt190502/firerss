@@ -1,0 +1,21 @@
+{
+  "theme": "Catppuccin Mocha",
+  "author": "Save (saveside)",
+  "colors": {
+      "dark": {
+          "background": "#181825",
+          "foreground": "#cdd6f4",
+          "active": "#f38ba8",
+          "inactive": "#eba0ac",
+          "selection": "#f38ba8",
+          "comment": "#a6adc8",
+          "cyan": "#94e2d5",
+          "green": "#a6e3a1",
+          "orange": "#fab387",
+          "pink": "#f5c2e7",
+          "purple": "#cba6f7",
+          "red": "#f38ba8",
+          "yellow": "#f9e2af"
+      }
+  }
+}

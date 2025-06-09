@@ -8,8 +8,8 @@ const initPopup = async () => {
     ApplyColorScheme(settings.color_scheme);
     ApplyTheme(settings.theme);
 
-    const url = new URL(window.location.href);
-    const feed_urls: string[] = JSON.parse(url.searchParams.get('feedlinks'));
+    const popup_url = new URL(window.location.href);
+    const feed_urls: string[] = JSON.parse(popup_url.searchParams.get('feedlinks'));
     const feed_list = document.getElementById('feed_url_list');
 
     document.getElementById('settings_button').addEventListener('click', () => {

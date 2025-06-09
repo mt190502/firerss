@@ -1,6 +1,7 @@
-@import url("/css/colors.css");
+@import url('/css/colors.css');
 
-html, body {
+html,
+body {
     font-family: Arial, sans-serif;
     font-size: 16px;
     margin: 0;
@@ -8,21 +9,25 @@ html, body {
     width: 500px;
 }
 
-header, footer {
+header,
+footer {
     text-align: center;
-    padding: 10px 0;
     font-weight: bold;
 }
 
+header {
+    padding: 8px 0;
+}
+
 footer {
-    margin-top: auto;
+    padding: 5px 0;
 }
 
 footer .logo-container {
     display: flex;
     justify-content: space-between;
-    margin-left: 10px;
-    margin-right: 10px;
+    align-items: center;
+    padding: 0 5px;
 }
 
 table {
@@ -32,18 +37,21 @@ table {
 
 tr {
     transition: background-color 0.2s ease;
-    height: 60px;
+    height: 48px;
 }
 
 td {
     padding: 10px;
 }
 
-a, a:visited {
+a,
+a:visited {
     text-decoration: none;
 }
 
-.col1, .col2, .col3 {
+.col1,
+.col2,
+.col3 {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -67,6 +75,7 @@ a, a:visited {
     text-align: center;
     user-select: none;
     width: 16px;
+    margin: 0 4px;
 }
 
 .help-icon::after {
@@ -79,7 +88,9 @@ a, a:visited {
     padding: 6px 8px;
     position: absolute;
     transform: translateX(-50%);
-    transition: opacity 0.2s, visibility 0.2s;
+    transition:
+        opacity 0.2s,
+        visibility 0.2s;
     visibility: hidden;
     white-space: pre-wrap;
     width: 150px;

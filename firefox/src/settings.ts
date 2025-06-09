@@ -103,7 +103,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const default_settings: Settings = await InitDefaultSettings();
 
         for (const key of Object.keys(default_settings) as (keyof Settings)[]) {
-            if (settings[key] === undefined) {
+            if (settings === undefined) {
+                settings = { ...default_settings };
+            } else if (settings[key] === undefined) {
                 (settings[key] as unknown) = default_settings[key];
             }
         }

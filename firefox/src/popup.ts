@@ -68,6 +68,16 @@ const initPopup = async () => {
             }, 2000);
         });
     }
+
+    const iconButtons = document.querySelectorAll('.icon-button[data-href]');
+    for (const btn of Array.from(iconButtons)) {
+        btn.addEventListener('click', (event) => {
+            const href = (event.currentTarget as HTMLElement).getAttribute('data-href');
+            if (href) {
+                window.open(href, '_blank');
+            }
+        });
+    }
 };
 
 (async () => {

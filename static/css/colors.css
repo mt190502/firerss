@@ -109,3 +109,13 @@ html[color-scheme='dark'] .active {
     background-color: var(--active-dark, #FF6600);
     color: var(--bg-light, white);
 }
+
+
+
+.icon-button:hover {
+    background-color: var(--inactive-light, #E0E0E0);
+}
+
+html[color-scheme='dark'] .icon-button:hover {
+    background-color: var(--inactive-dark, #333333);
+}

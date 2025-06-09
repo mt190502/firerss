@@ -48,9 +48,11 @@ a, a:visited {
     padding-right: 10px;
 }
 
-.left-icons * img, .right-icons * img {
+.left-icons * img,
+.right-icons * img {
     width: 20px;
     height: 20px;
+    margin: 0 4px;
 }
 
 .help-icon {
@@ -86,4 +88,25 @@ a, a:visited {
 .help-icon:hover::after {
     opacity: 1;
     visibility: visible;
+}
+
+.icon-button {
+    --size: 32px;
+    display: inline-flex;
+    width: var(--size);
+    height: var(--size);
+    padding: 0;
+    margin: 0 4px;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.icon-button svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
 }

@@ -4,7 +4,7 @@
     "name": "FireRSS - RSS and Atom Feeds Scraper",
     "short_name": "FireRSS",
     "description": "A RSS and Atom feeds scraper on the current page",
-    "version": "2.2.3",
+    "version": "2.3.0",
     "homepage_url": "https://github.com/mt190502/firerss",
 
     "icons": {
@@ -40,12 +40,5 @@
         "open_in_tab": false
     },
 
-    "host_permissions": ["https://*/*", "http://*/*"],
-
-    "web_accessible_resources": [
-        {
-            "resources": ["js/youtube.js"],
-            "matches": ["https://www.youtube.com/*"]
-        }
-    ]
+    "host_permissions": ["https://*/*", "http://*/*"]
 }

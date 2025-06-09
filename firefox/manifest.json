@@ -4,7 +4,7 @@
     "name": "FireRSS - RSS and Atom Feeds Scraper",
     "short_name": "FireRSS",
     "description": "A RSS and Atom feeds scraper on the current page",
-    "version": "2.2.3",
+    "version": "2.3.0",
     "homepage_url": "https://github.com/mt190502/firerss",
 
     "icons": {
@@ -36,7 +36,7 @@
     "browser_specific_settings": {
         "gecko": {
             "id": "firerss@mtaha.dev",
-            "strict_min_version": "130.0"
+            "strict_min_version": "135.0"
         }
     },
 

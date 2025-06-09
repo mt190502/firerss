@@ -30,7 +30,31 @@ const SaveTheme = async (theme: string) => {
 };
 
 const SaveIgnoredSites = () => {
-    settings.ignored_sites = ignored_urls_textarea.value.split('\n').filter((line) => line.trim() !== '');
+    const lines = ignored_urls_textarea.value
+        .split('\n')
+        .map((l) => l.trim())
+        .filter((l) => l !== '');
+    const entries: Settings['ignored_sites'] = [];
+    for (const line of lines) {
+        const [p, m] = line.split('#');
+        const pattern = p.trim();
+        const mode = m?.trim();
+        const match_type = (mode || 'subdomain') as 'contains' | 'domain' | 'subdomain';
+        if (mode && !['contains', 'domain', 'subdomain'].includes(mode)) return;
+        entries.push({ pattern, match_type });
+    }
+    const map = new Map<string, Settings['ignored_sites'][0]>();
+    for (const entry of entries) {
+        if (entry.match_type === 'domain') {
+            const parts = entry.pattern.split('.');
+            if (parts.length > 2) {
+                entry.pattern = parts.slice(-2).join('.');
+            }
+        }
+        map.set(entry.pattern, entry);
+    }
+    const deduped = Array.from(map.values());
+    settings.ignored_sites = deduped;
     browser.storage.local.set({ firerss_settings: settings });
     browser.runtime.sendMessage({ type: 'clear_feed_cache' });
 };
@@ -92,7 +116,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         ToggleExtendedFeedScan(settings?.extended_feed_scan);
         theme_selector.value = settings?.theme?.url || 'default';
-        ignored_urls_textarea.value = settings?.ignored_sites.join('\n') || '';
+        ignored_urls_textarea.value = settings?.ignored_sites
+            ? settings.ignored_sites.map((site) => `${site.pattern}#${site.match_type}`).join('\n')
+            : '';
     })();
     
     const iconButtons = document.querySelectorAll('.icon-button[data-href]');

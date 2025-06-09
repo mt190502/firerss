@@ -7,6 +7,9 @@ export interface Settings {
         url: string;
         colors: Theme['colors'];
     };
-    ignored_sites: (string | RegExp)[];
+    ignored_sites: {
+        pattern: string;
+        match_type: 'contains' | 'domain' | 'subdomain';
+    }[];
     extended_feed_scan: 0 | 1 | 2;
 }

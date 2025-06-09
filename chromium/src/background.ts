@@ -153,8 +153,24 @@ const injectScript = (tab_id: number) => {
         }
 
         const url = new URL(tab_info.url);
-        for (const site of settings.ignored_sites) {
-            if (url.host.match(new RegExp(site, 'gi'))) {
+        for (const line of settings.ignored_sites) {
+            const { pattern, match_type } = line;
+            const host = url.hostname;
+            let is_match = false;
+
+            switch (match_type) {
+                case 'contains':
+                    is_match = tab_info.url.includes(pattern);
+                    break;
+                case 'domain':
+                    is_match = host === pattern || host.endsWith('.' + pattern);
+                    break;
+                case 'subdomain':
+                    is_match = host === pattern || host.startsWith(pattern + '.');
+                    break;
+            }
+
+            if (is_match) {
                 disableIcon(tab_id, Status.SITE_IGNORED);
                 return;
             }

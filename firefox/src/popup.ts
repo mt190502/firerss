@@ -16,6 +16,20 @@ const initPopup = async () => {
         browser.runtime.openOptionsPage();
     });
 
+    document.getElementById('exclude_site_button').addEventListener('click', async () => {
+        const current_tab = await browser.tabs.query({ active: true, currentWindow: true });
+        if (current_tab.length === 0) return;
+        const current_url = new URL(current_tab[0].url);
+        const new_entry = {
+            pattern: current_url.hostname,
+            match_type: 'subdomain' as 'contains' | 'domain' | 'subdomain',
+        };
+        settings.ignored_sites.push(new_entry);
+        browser.storage.local.set({ firerss_settings: settings });
+        browser.runtime.sendMessage({ type: 'exclude_site', url: current_tab[0].url, tabId: current_tab[0].id });
+        window.close();
+    });
+
     for (let feed_url of feed_urls) {
         const tr = document.createElement('tr');
         const td1 = document.createElement('td');

@@ -32,6 +32,7 @@ const SaveTheme = async (theme: string) => {
 const SaveIgnoredSites = () => {
     settings.ignored_sites = ignored_urls_textarea.value.split('\n').filter((line) => line.trim() !== '');
     browser.storage.local.set({ firerss_settings: settings });
+    browser.runtime.sendMessage({ type: 'clear_feed_cache' });
 };
 
 const ToggleExtendedFeedScan = (opt: 0 | 1 | 2) => {
@@ -42,6 +43,7 @@ const ToggleExtendedFeedScan = (opt: 0 | 1 | 2) => {
         if (button.value === opt.toString()) button.classList.add('active');
     }
     browser.storage.local.set({ firerss_settings: settings });
+    browser.runtime.sendMessage({ type: 'clear_feed_cache' });
 };
 
 document.addEventListener('DOMContentLoaded', async () => {

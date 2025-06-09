@@ -1,5 +1,6 @@
 import { findAllFeeds } from './content';
 import { InitDefaultSettings } from './lib/init_default_settings';
+import { Settings } from './types/settings_interface';
 
 enum Status {
     LOADING = 'Loading',
@@ -66,7 +67,7 @@ const updatePopupState = (tab_id: number, feed_urls: string[]) => {
 };
 
 const injectScript = async (tab_id: number, tab_info?: browser.tabs.Tab) => {
-    const settings =
+    const settings: Settings =
         (await browser.storage.local.get('firerss_settings')).firerss_settings ?? (await InitDefaultSettings());
     if (!tab_info) {
         while (tab_info === undefined) {
@@ -109,12 +110,19 @@ const injectScript = async (tab_id: number, tab_info?: browser.tabs.Tab) => {
     if (!browser.runtime.lastError) {
         const feed_urls: string[] = [];
         for (const result of injection) {
-            feed_urls.push(...result.result);
+            const value = (result as any).result;
+            if (Array.isArray(value)) {
+                feed_urls.push(...value.filter((x): x is string => typeof x === 'string' && x.trim() !== ''));
+            } else if (typeof value === 'string' && value.trim() !== '') {
+                feed_urls.push(value);
+            }
         }
 
-        if (feed_urls.length > 0) {
-            sessionStorage.setItem(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`, JSON.stringify(feed_urls));
-            updatePopupState(tab_id, feed_urls);
+        const unique_feeds = [...new Set(feed_urls)];
+
+        if (unique_feeds.length > 0) {
+            sessionStorage.setItem(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`, JSON.stringify(unique_feeds));
+            updatePopupState(tab_id, unique_feeds);
         } else {
             sessionStorage.setItem(`firerss_feeds:${tab_info.url.replace(/\W/gi, '')}`, JSON.stringify([]));
             disableIcon(tab_id, Status.NO_FEEDS);
@@ -146,4 +154,26 @@ browser.tabs.onActivated.addListener((active_info) => {
 
 browser.runtime.onInstalled.addListener(() => {
     disableIcon();
+});
+
+browser.runtime.onMessage.addListener((message) => {
+    switch (message.type) {
+        case 'exclude_site': {
+            const feedKey = `firerss_feeds:${message.url.replace(/\W/gi, '')}`;
+            sessionStorage.removeItem(feedKey);
+            if (typeof message.tabId === 'number') {
+                disableIcon(message.tabId, Status.SITE_IGNORED);
+            }
+            break;
+        }
+        case 'clear_feed_cache': {
+            for (let i = sessionStorage.length - 1; i >= 0; i--) {
+                const key = sessionStorage.key(i);
+                if (key && key.startsWith('firerss_feeds:')) {
+                    sessionStorage.removeItem(key);
+                }
+            }
+            break;
+        }
+    }
 });

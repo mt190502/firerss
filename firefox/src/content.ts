@@ -5,13 +5,20 @@ export const findAllFeeds = async (): Promise<string[]> => {
         (await browser.storage.local.get('firerss_settings')).firerss_settings ?? (await InitDefaultSettings());
     const feed_urls: string[] = [];
     const youtube_user_pattern = /(?<=(https:\/\/(www\.)?youtube.com\/))@\w+/gi;
+    const youtube_channel_pattern = /(?<=(https:\/\/(www\.)?youtube.com\/channel\/))[\w-]+/gi;
     let doc: Document;
 
-    if (window.location.origin.includes('youtube.com') && window.location.href.match(youtube_user_pattern)) {
-        doc = new DOMParser().parseFromString(
-            await (await fetch(window.location.href + '/about', { mode: 'cors' })).text(),
-            'text/html'
-        );
+    if (window.location.origin.includes('youtube.com')) {
+        if (window.location.href.match(youtube_channel_pattern)) {
+            const channel_id = window.location.href.match(youtube_channel_pattern)[0];
+            feed_urls.push(`https://www.youtube.com/feeds/videos.xml?channel_id=${channel_id}`);
+            doc = document;
+        } else if (window.location.href.match(youtube_user_pattern)) {
+            doc = new DOMParser().parseFromString(
+                await (await fetch(window.location.href + '/about', { mode: 'cors' })).text(),
+                'text/html'
+            );
+        }
     } else {
         doc = document;
     }

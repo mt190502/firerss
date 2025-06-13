@@ -1,13 +1,21 @@
+<div align="center">
+
 # FireRSS
 
 FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web page.
 
 ![image](https://github.com/user-attachments/assets/f3b02ade-8512-4a36-8855-1b219a48bbdf)
 
+[Google Chrome](https://chromewebstore.google.com/detail/firerss-rss-and-atom-feed/bpckagecmifbdpklfcjbkfdeefkijjkd) <a href="https://chromewebstore.google.com/detail/firerss-rss-and-atom-feed/bpckagecmifbdpklfcjbkfdeefkijjkd" target="_blank"><img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/bpckagecmifbdpklfcjbkfdeefkijjkd?color=blue"></a> • [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/firerss-feed-scraper) <a href="https://addons.mozilla.org/en-US/firefox/addon/firerss-feed-scraper" target="_blank"><img alt="Mozilla Add-on" src="https://img.shields.io/amo/users/firerss-feed-scraper"></a>
 
-## Installation (Chrome)
+</div>
 
-- **Note**: This extension is not available on the Chrome Web Store. You can install it manually by following the steps below.
+<hr>
+
+## Manual Installation (for Development)
+
+<details>
+  <summary>Chrome</summary>
 
 1. Clone the repository
 
@@ -44,6 +52,39 @@ FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web pag
 
 7. Click on `Add Extension` to install the extension.
 
-## Installation (Firefox)
+</details>
 
-This extension is already available on the Firefox Add-ons store. You can install it from [here](https://addons.mozilla.org/en-US/firefox/addon/firerss-feed-scraper/)
+<details>
+   <summary>Firefox</summary>
+
+1. Clone the repository
+
+   ```bash
+   git clone <this-repo>
+   ```
+
+2. Install the nodejs and npm dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Build the extension
+
+   ```bash
+   make firefox
+   ```
+
+5. Open Firefox and go to `about:debugging`
+
+6. Then click `This Firefox` and click `Load Temporary Add-on...`
+
+7. Select manifest.json from dist/firefox/ under project folder
+
+</details>
+
+<hr>
+
+## License
+
+See [LICENSE](./LICENSE)

@@ -4,7 +4,8 @@
 
 FireRSS is a simple RSS scrape tool to find the RSS feeds in the current web page.
 
-![image](https://github.com/user-attachments/assets/f3b02ade-8512-4a36-8855-1b219a48bbdf)
+![image](https://github.com/user-attachments/assets/d6050798-4ce7-459b-8a2a-60494ae078b7)
+
 
 [Google Chrome](https://chromewebstore.google.com/detail/firerss-rss-and-atom-feed/bpckagecmifbdpklfcjbkfdeefkijjkd) <a href="https://chromewebstore.google.com/detail/firerss-rss-and-atom-feed/bpckagecmifbdpklfcjbkfdeefkijjkd" target="_blank"><img alt="Chrome Web Store" src="https://img.shields.io/chrome-web-store/users/bpckagecmifbdpklfcjbkfdeefkijjkd?color=blue"></a> • [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/firerss-feed-scraper) <a href="https://addons.mozilla.org/en-US/firefox/addon/firerss-feed-scraper" target="_blank"><img alt="Mozilla Add-on" src="https://img.shields.io/amo/users/firerss-feed-scraper"></a>
 

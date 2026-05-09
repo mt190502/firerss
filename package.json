@@ -23,7 +23,7 @@
     "homepage": "https://github.com/mt190502/firerss",
     "devDependencies": {
         "@eslint/js": "^9.39.1",
-        "@types/chrome": "^0.0.280",
+        "@types/chrome": "^0.1.42",
         "@types/firefox": "^0.0.34",
         "@types/firefox-webext-browser": "^120.0.5",
         "@types/node": "^22.19.1",

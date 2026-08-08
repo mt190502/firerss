@@ -21,7 +21,8 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 });
 
 chrome.storage.local.onChanged.addListener((changes) => {
-    if (changes.firerss_settings) {
-        ApplyColorScheme(changes.firerss_settings.newValue.color_scheme);
+    const new_settings = changes.firerss_settings?.newValue as Settings | undefined;
+    if (new_settings) {
+        ApplyColorScheme(new_settings.color_scheme);
     }
 });

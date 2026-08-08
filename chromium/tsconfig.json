@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "../dist/chromium",
         "rootDir": "./",
+        "types": ["node", "chrome"]
     },
-    "include": ["**/*.ts"],
+    "include": ["**/*.ts"]
 }

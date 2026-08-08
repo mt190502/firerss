@@ -1,35 +1,25 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "baseUrl": ".",
-        "composite": true,
-        "emitDecoratorMetadata": true,
+        "allowJs": true,
+        "checkJs": true,
         "esModuleInterop": true,
-        "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
-        "lib": ["ES6", "DOM"],
-        "module": "CommonJS",
-        "moduleResolution": "node",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
         "noEmitOnError": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "outDir": "./dist",
-        "paths": {
-            "*": ["node_modules/*"]
-        },
-        "resolveJsonModule": true,
         "removeComments": true,
         "skipLibCheck": true,
         "sourceMap": false,
+        "strict": true,
         "target": "ESNext",
-        "typeRoots": ["node_modules/@types"]
+        "types": ["node"]
     },
     "compileOnSave": true,
-    "exclude": ["node_modules/*", "dist", "build", "static", "**/*.spec.ts", "**/*.test.ts"],
-    "include": ["eslint.config.mjs", "webpack.*.ts", "**/webpack.common.ts", "**/webpack.dev.ts", "**/webpack.prod.ts"],
-    "references": [
-        { "path": "chromium/tsconfig.json" },
-        { "path": "firefox/tsconfig.json" }
-    ]
+    "exclude": ["node_modules/*", "dist", "build", "**/*.spec.ts", "**/*.test.ts"],
+    "include": ["static/js/**/*.js", "**/webpack.common.ts", "**/webpack.dev.ts"]
 }

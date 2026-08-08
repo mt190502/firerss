@@ -1,17 +1,14 @@
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import { glob } from 'glob';
 import path from 'path';
 import webpack from 'webpack';
 
 const config: webpack.Configuration = {
-    entry: (() => {
-        const files = glob.sync(`chromium/src/**/*.ts`);
-        return files.reduce((entries: { [key: string]: string }, file) => {
-            const name = path.basename(file, '.ts');
-            entries[name] = '/' + file;
-            return entries;
-        }, {});
-    })(),
+    entry: {
+        background: path.resolve(process.cwd(), 'chromium/src/background.ts'),
+        list_editor: path.resolve(process.cwd(), 'chromium/src/list_editor.ts'),
+        popup: path.resolve(process.cwd(), 'chromium/src/popup.ts'),
+        settings: path.resolve(process.cwd(), 'chromium/src/settings.ts'),
+    },
     resolve: {
         extensions: ['.ts', '.js'],
     },
@@ -19,19 +16,32 @@ const config: webpack.Configuration = {
         rules: [
             {
                 test: /\.ts$/,
-                use: 'ts-loader',
+                use: {
+                    loader: 'ts-loader',
+                    options: {
+                        onlyCompileBundledFiles: true,
+                    },
+                },
                 exclude: /node_modules/,
             },
         ],
     },
     output: {
         filename: 'js/[name].js',
-        path: path.resolve(__dirname, '../dist/chromium'),
+        path: path.resolve(process.cwd(), 'dist/chromium'),
         clean: true,
     },
     plugins: [
         new CopyWebpackPlugin({
-            patterns: [{ from: 'chromium/manifest.json' }, { from: 'static' }, { from: 'assets', to: 'img' }],
+            patterns: [
+                { from: 'chromium/manifest.json' },
+                { from: 'static' },
+                {
+                    from: 'assets',
+                    to: 'img',
+                    globOptions: { ignore: ['**/*_dark.png', '**/*.ase'] },
+                },
+            ],
         }),
     ],
 };

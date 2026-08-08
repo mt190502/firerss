@@ -11,7 +11,8 @@ chromium:
 
 firefox:
 	pnpm build:firefox
-	cd $(FIREFOX_BUILD_DIR) && (find . -type f -not -name '*.xpi' -not -name '*.zip' | zip -@ ../$(shell basename $(FIREFOX_BUILD_DIR))-firerss.xpi)
+	rm -f $(FIREFOX_BUILD_DIR)-firerss.xpi
+	cd $(FIREFOX_BUILD_DIR) && zip -r ../$(shell basename $(FIREFOX_BUILD_DIR))-firerss.xpi .
 
 clean:
 	rm -rf build dist

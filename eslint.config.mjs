@@ -15,13 +15,14 @@ const compat = new FlatCompat({
 });
 
 export default [
+    {
+        ignores: ['node_modules', 'dist', 'build', 'database', 'eslint.config.mjs', '**/webpack**'],
+    },
     ...compat.extends('eslint:recommended', 'plugin:@typescript-eslint/recommended'),
     {
         plugins: {
             '@typescript-eslint': typescriptEslint,
         },
-
-        ignores: ['node_modules', 'dist', 'build', 'database', 'eslint.config.mjs', '**/webpack**'],
 
         languageOptions: {
             globals: {
@@ -31,7 +32,6 @@ export default [
             parser: tsParser,
             parserOptions: {
                 projectService: true,
-                project: ['./tsconfig.json', './chromium/tsconfig.json', './firefox/tsconfig.json'],
             },
             ecmaVersion: 'latest',
             sourceType: 'module',
@@ -162,6 +162,14 @@ export default [
             'space-in-parens': 'error',
             'space-unary-ops': 'error',
             yoda: 'error',
+        },
+    },
+    {
+        files: ['static/js/**/*.js'],
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+            },
         },
     },
 ];

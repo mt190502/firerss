@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>FireRSS List Editor</title>
+        <link media="all" rel="stylesheet" href="/css/list_editor.css" />
+    </head>
+    <body>
+        <header class="editor-header">
+            <button id="back_button" class="editor-nav-button" type="button">← Settings</button>
+            <h1 id="editor_title"></h1>
+            <span></span>
+        </header>
+
+        <main>
+            <p id="editor_description" class="editor-description"></p>
+
+            <section class="editor-compose" aria-label="Add or edit item">
+                <div id="ignored_form">
+                    <label for="ignored_pattern">URL or hostname pattern</label>
+                    <input id="ignored_pattern" type="text" autocomplete="off" placeholder="example.com" />
+                    <div class="mode-picker" role="group" aria-label="Match mode">
+                        <button
+                            class="mode_button"
+                            type="button"
+                            data-mode="contains"
+                            title="Match text anywhere in the full URL"
+                        >
+                            Contains
+                        </button>
+                        <button
+                            class="mode_button"
+                            type="button"
+                            data-mode="domain"
+                            title="Match this domain and all of its subdomains"
+                        >
+                            Domain
+                        </button>
+                        <button
+                            class="mode_button"
+                            type="button"
+                            data-mode="subdomain"
+                            title="Match this exact hostname"
+                        >
+                            Exact Host
+                        </button>
+                    </div>
+                </div>
+
+                <div id="templates_form" hidden>
+                    <label for="page_url_template">Page URL template</label>
+                    <input
+                        id="page_url_template"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="https://&lt;user&gt;.example.com"
+                    />
+                    <label for="feed_url_template">Feed URL template</label>
+                    <input
+                        id="feed_url_template"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="https://&lt;user&gt;.example.com/feed"
+                    />
+                </div>
+
+                <div class="compose-actions">
+                    <button id="save_button" class="primary_button" type="button">Add</button>
+                    <button id="cancel_button" type="button" hidden>Cancel edit</button>
+                </div>
+            </section>
+
+            <div class="list-heading">
+                <h2 id="list_title"></h2>
+                <span id="item_count"></span>
+            </div>
+            <div id="editor_list" class="editor-list" role="list"></div>
+            <p id="empty_message" class="empty-message" hidden>No entries yet.</p>
+        </main>
+
+        <footer>
+            <div class="logo-container">
+                <div class="left-icons">
+                    <div id="editor_status" role="status" aria-live="polite"></div>
+                </div>
+                <firerss-external-links></firerss-external-links>
+            </div>
+        </footer>
+
+        <script src="/js/components.js"></script>
+        <script src="/js/list_editor.js"></script>
+    </body>
+</html>

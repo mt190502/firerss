@@ -1,21 +1,59 @@
-@import url("/css/base.css");
+@import url('/css/base.css');
 
-html, body {
+html,
+body {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-@supports(-webkit-tap-highlight-color: black) {
-    html, body {
-        width: 700px;
+@supports (-webkit-tap-highlight-color: black) {
+    html,
+    body {
+        max-width: 700px;
     }
 }
 
-select, textarea {
-    resize: vertical;
-    text-wrap: nowrap;
+select {
     width: 200px;
+}
+
+.migration-notice {
+    border-bottom: 1px solid var(--inactive-light, #d1d5db);
+    padding: 12px 14px;
+}
+
+html[color-scheme='dark'] .migration-notice {
+    border-bottom-color: var(--inactive-dark, #444);
+}
+
+.migration-notice h2 {
+    font-size: 15px;
+    margin: 0 0 6px;
+}
+
+.migration-notice p {
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.migration-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.setting-editor-summary {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.setting-editor-summary span {
+    font-size: 13px;
+    opacity: 0.75;
 }
 
 td.setting_key_area {
@@ -26,13 +64,38 @@ td.setting_value_area {
     text-align: right;
 }
 
-.color_scheme_button, .extended_feed_scan_button {
+.color_scheme_button,
+.extended_feed_scan_button,
+.settings_sync_button,
+.settings_action_button {
     border: none;
     font-weight: bold;
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
     font-size: 14px;
 }
 
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+#settings_status {
+    font-size: 12px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0 6px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+footer .left-icons {
+    flex: 1;
+    min-width: 0;
+}

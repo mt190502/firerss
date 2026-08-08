@@ -1,4 +1,4 @@
-@import url("/css/base.css");
+@import url('/css/base.css');
 
 td.feed_url > a {
     width: 300px;
@@ -20,8 +20,16 @@ td.copy_button_area {
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
     font-size: 14px;
+}
+
+#popup_status {
+    font-size: 12px;
+    padding: 0 10px;
+    text-align: center;
 }
 
 .left-icons,
@@ -29,4 +37,3 @@ td.copy_button_area {
     display: flex;
     align-items: center;
 }
-

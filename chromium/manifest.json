@@ -3,8 +3,8 @@
 
     "name": "FireRSS - RSS and Atom Feeds Scraper",
     "short_name": "FireRSS",
-    "description": "A RSS and Atom feeds scraper on the current page",
-    "version": "2.3.2",
+    "description": "Detects RSS and Atom feed candidates on pages and site origins",
+    "version": "3.0.0",
     "homepage_url": "https://github.com/mt190502/firerss",
 
     "icons": {
@@ -29,11 +29,7 @@
         "service_worker": "js/background.js"
     },
 
-    "externally_connectable": {
-        "matches": ["*://*.google.com/*"]
-    },
-
-    "permissions": ["activeTab", "scripting", "storage"],
+    "permissions": ["identity", "identity.email", "scripting", "storage"],
 
     "options_ui": {
         "page": "html/settings.html",

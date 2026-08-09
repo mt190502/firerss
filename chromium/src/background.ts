@@ -1,4 +1,4 @@
-import { findPassiveFeeds } from './content';
+import { findPassiveFeeds, findYouTubeFeeds } from './content';
 import { InitDefaultSettings } from './lib/init_default_settings';
 import { ResolveFeedTemplates } from './lib/feed_templates';
 import { NormalizeSettings, RegisterSettingsSync } from './lib/settings_storage';
@@ -12,6 +12,11 @@ enum Status {
 }
 
 const popup_url = chrome.runtime.getURL('/html/popup.html');
+const tab_feed_state_prefix = 'firerss_tab_feed_state:';
+const scan_versions = new Map<number, number>();
+const passive_feeds = new Map<number, string[]>();
+const spa_navigations = new Set<number>();
+const loading_tabs = new Set<number>();
 
 const disableIcon = (tab_id?: number, status?: Status) => {
     chrome.action.disable(tab_id ?? undefined);
@@ -72,7 +77,7 @@ const getTabFromId = (tab_id: number): Promise<chrome.tabs.Tab> => {
 };
 
 const extended_feed_paths = ['/atom.xml', '/atom', '/feed.xml', '/feed', '/index.xml', '/rss.xml', '/rss'];
-const extended_cache_prefix = 'firerss_extended:v1:';
+const extended_cache_prefix = 'firerss_extended:v2:';
 const positive_cache_ttl = 24 * 60 * 60 * 1000;
 const negative_cache_ttl = 15 * 60 * 1000;
 const pending_extended_scans = new Map<string, Promise<string[]>>();
@@ -81,6 +86,40 @@ interface ExtendedFeedCache {
     expires_at: number;
     feed_urls: string[];
 }
+
+interface PassiveFeedResult {
+    feed_urls: string[];
+    settled: boolean;
+}
+
+interface TabFeedState {
+    passive_feed_urls: string[];
+}
+
+const IsPassiveFeedResult = (value: unknown): value is PassiveFeedResult => {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+    const result = value as Record<string, unknown>;
+    return (
+        Array.isArray(result.feed_urls) &&
+        result.feed_urls.every((feed_url) => typeof feed_url === 'string') &&
+        typeof result.settled === 'boolean'
+    );
+};
+
+const IsTabFeedState = (value: unknown): value is TabFeedState => {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+    const state = value as Record<string, unknown>;
+    return (
+        Array.isArray(state.passive_feed_urls) &&
+        state.passive_feed_urls.every((feed_url) => typeof feed_url === 'string')
+    );
+};
+
+const GetYouTubeChannelRoute = (value: string): string | undefined => {
+    const url = new URL(value);
+    if (!['youtube.com', 'www.youtube.com'].includes(url.hostname)) return undefined;
+    return url.pathname.match(/^\/(?:@[^/]+|channel\/[^/]+|c\/[^/]+|user\/[^/]+)/i)?.[0].toLowerCase();
+};
 
 const MatchesUrlRule = (url: URL, rule: UrlRule): boolean => {
     switch (rule.match_type) {
@@ -119,7 +158,6 @@ const ProbeExtendedFeeds = async (origin: string): Promise<string[]> => {
                 const response = await fetch(feed_url, {
                     cache: 'no-store',
                     credentials: 'omit',
-                    headers: { Accept: 'application/atom+xml, application/rss+xml, application/xml, text/xml;q=0.9' },
                     redirect: 'error',
                     referrerPolicy: 'no-referrer',
                     signal: AbortSignal.timeout(5_000),
@@ -153,9 +191,10 @@ const AddFeedUrl = (feed_urls: string[], feed_url: string, marker = '') => {
     if (!feed_urls.some((existing) => getRawUrl(existing) === feed_url)) feed_urls.push(marker + feed_url);
 };
 
-const injectScript = async (tab_id: number) => {
+const injectScript = async (tab_id: number, scan_version: number, wait_for_navigation: boolean) => {
     const settings = await InitDefaultSettings();
     const tab_info = await getTabFromId(tab_id);
+    if (scan_versions.get(tab_id) !== scan_version) return;
     const tab_url = tab_info.url;
 
     if (!tab_url || tab_url === popup_url) {
@@ -179,18 +218,46 @@ const injectScript = async (tab_id: number) => {
         AddFeedUrl(feed_urls, feed_url, '__template__:');
     }
 
-    const injection = await chrome.scripting.executeScript({
-        target: { tabId: tab_id },
-        func: findPassiveFeeds,
-    });
+    if (!passive_feeds.has(tab_id)) {
+        const state_key = tab_feed_state_prefix + tab_id;
+        const stored_state = (await chrome.storage.session.get(state_key))[state_key];
+        if (scan_versions.get(tab_id) !== scan_version) return;
+        if (IsTabFeedState(stored_state)) passive_feeds.set(tab_id, stored_state.passive_feed_urls);
+    }
+    const previous_passive_feeds = wait_for_navigation ? (passive_feeds.get(tab_id) ?? []) : [];
+    const youtube_channel_route = GetYouTubeChannelRoute(tab_url);
+    const InjectPassiveFeeds = async () => {
+        if (wait_for_navigation && youtube_channel_route) {
+            return chrome.scripting.executeScript({
+                target: { tabId: tab_id },
+                world: 'MAIN',
+                func: findYouTubeFeeds,
+            });
+        }
+        return chrome.scripting.executeScript({
+            target: { tabId: tab_id },
+            func: findPassiveFeeds,
+            args: [previous_passive_feeds, wait_for_navigation],
+        });
+    };
+    const injection = await InjectPassiveFeeds();
+    const detected_passive_feeds: string[] = [];
+    let passive_feeds_settled = true;
+    let has_passive_result = false;
     for (const result of injection) {
         const value = result.result;
-        if (Array.isArray(value)) {
-            for (const feed_url of value) {
-                if (typeof feed_url === 'string' && feed_url.trim() !== '') AddFeedUrl(feed_urls, feed_url);
+        if (!IsPassiveFeedResult(value)) continue;
+        has_passive_result = true;
+        passive_feeds_settled &&= value.settled;
+        for (const feed_url of value.feed_urls) {
+            if (feed_url.trim() !== '') {
+                AddFeedUrl(feed_urls, feed_url);
+                if (!detected_passive_feeds.includes(feed_url)) detected_passive_feeds.push(feed_url);
             }
         }
     }
+    if (!has_passive_result) throw new Error('The page did not return a valid passive feed scan result.');
+    if (scan_versions.get(tab_id) !== scan_version) return;
 
     const should_probe =
         !is_extended_scan_excluded &&
@@ -201,6 +268,17 @@ const injectScript = async (tab_id: number) => {
         }
     }
 
+    if (scan_versions.get(tab_id) !== scan_version) return;
+    if (passive_feeds_settled) {
+        passive_feeds.set(tab_id, detected_passive_feeds);
+        spa_navigations.delete(tab_id);
+        await chrome.storage.session.set({
+            [tab_feed_state_prefix + tab_id]: {
+                passive_feed_urls: detected_passive_feeds,
+            } satisfies TabFeedState,
+        });
+        if (scan_versions.get(tab_id) !== scan_version) return;
+    }
     if (feed_urls.length > 0) {
         updatePopupState(tab_id, feed_urls);
     } else {
@@ -208,8 +286,9 @@ const injectScript = async (tab_id: number) => {
     }
 };
 
-const RunInjectScript = (tab_id: number) => {
-    void injectScript(tab_id).catch((error: unknown) => {
+const RunInjectScript = (tab_id: number, scan_version: number, wait_for_navigation: boolean) => {
+    void injectScript(tab_id, scan_version, wait_for_navigation).catch((error: unknown) => {
+        if (scan_versions.get(tab_id) !== scan_version) return;
         const is_expected_error =
             error instanceof Error &&
             /showing error page|cannot access contents of url|no frame with id|invalid tab id|tab was closed/i.test(
@@ -222,15 +301,77 @@ const RunInjectScript = (tab_id: number) => {
     });
 };
 
-chrome.tabs.onUpdated.addListener((tab_id, status) => {
-    if (status.status !== 'complete') return;
+const InvalidateScan = (tab_id: number): number => {
+    const scan_version = (scan_versions.get(tab_id) ?? 0) + 1;
+    scan_versions.set(tab_id, scan_version);
     disableIcon(tab_id, Status.LOADING);
-    RunInjectScript(tab_id);
+    chrome.action.setPopup({ popup: popup_url, tabId: tab_id });
+    return scan_version;
+};
+
+const ScheduleScan = (tab_id: number, wait_for_navigation = spa_navigations.has(tab_id)) => {
+    RunInjectScript(tab_id, InvalidateScan(tab_id), wait_for_navigation);
+};
+
+chrome.webNavigation.onCommitted.addListener((details) => {
+    if (details.frameId !== 0) return;
+    loading_tabs.add(details.tabId);
+    spa_navigations.delete(details.tabId);
+    InvalidateScan(details.tabId);
+});
+
+chrome.webNavigation.onCompleted.addListener((details) => {
+    if (details.frameId !== 0) return;
+    void getTabFromId(details.tabId)
+        .then((tab) => {
+            if (tab.url !== details.url || spa_navigations.has(details.tabId)) return;
+            loading_tabs.delete(details.tabId);
+            ScheduleScan(details.tabId, false);
+        })
+        .catch(() => undefined);
+});
+
+chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
+    if (details.frameId !== 0) return;
+    loading_tabs.delete(details.tabId);
+    spa_navigations.add(details.tabId);
+    ScheduleScan(details.tabId, true);
+});
+
+chrome.webNavigation.onReferenceFragmentUpdated.addListener((details) => {
+    if (details.frameId !== 0) return;
+    loading_tabs.delete(details.tabId);
+    spa_navigations.delete(details.tabId);
+    ScheduleScan(details.tabId, false);
+});
+
+chrome.webNavigation.onErrorOccurred.addListener((details) => {
+    if (details.frameId !== 0) return;
+    void getTabFromId(details.tabId)
+        .then((tab) => {
+            if (tab.url !== details.url) return;
+            loading_tabs.delete(details.tabId);
+            spa_navigations.delete(details.tabId);
+            InvalidateScan(details.tabId);
+            disableIcon(details.tabId, Status.BROWSER_PAGE);
+        })
+        .catch(() => undefined);
 });
 
 chrome.tabs.onActivated.addListener((active_info) => {
-    disableIcon(active_info.tabId);
-    RunInjectScript(active_info.tabId);
+    if (loading_tabs.has(active_info.tabId)) {
+        InvalidateScan(active_info.tabId);
+        return;
+    }
+    ScheduleScan(active_info.tabId);
+});
+
+chrome.tabs.onRemoved.addListener((tab_id) => {
+    scan_versions.delete(tab_id);
+    passive_feeds.delete(tab_id);
+    spa_navigations.delete(tab_id);
+    loading_tabs.delete(tab_id);
+    void chrome.storage.session.remove(tab_feed_state_prefix + tab_id);
 });
 
 chrome.runtime.onInstalled.addListener((details) => {

@@ -1,6 +1,6 @@
 {
     "name": "firerss",
-    "version": "3.0.1",
+    "version": "3.1.0",
     "description": "Detects RSS and Atom feed candidates on pages and site origins",
     "repository": {
         "type": "git",

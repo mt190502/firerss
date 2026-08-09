@@ -31,6 +31,8 @@ https://t.me/<user> => https://rss-bridge.org/bridge01/?action=display&bridge=Te
 
 Extended Feed Scan only probes root paths such as `/feed`, `/rss.xml`, and `/atom.xml`. Positive results are cached per origin for 24 hours and negative results for 15 minutes to avoid repeated requests. Add sensitive sites to Extended Scan Exclusions instead of Ignored URLs when passive feed discovery should remain available.
 
+After single-page navigation, FireRSS watches for updated feed metadata. If the page does not expose the new metadata in the live document, FireRSS requests the current page once without cookies or a referrer and parses only its RSS/Atom metadata.
+
 ## Upgrading To FireRSS 3
 
 FireRSS 3 is a breaking release. It changes the settings model, separates Extended Scan Exclusions from fully ignored URLs, and makes Exact Host matching truly hostname-specific.
